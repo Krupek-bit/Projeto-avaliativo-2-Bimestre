@@ -20,8 +20,8 @@
       <td>{{ $v->tipo }}</td>
       <td>
         <span class="badge text-bg-{{ match($v->status) {
-            'ativo' => 'success', 'manutencao' => 'warning', 'inativo' => 'secondary', default => 'light' } }}">
-          {{ $v->status }}
+            'ativo' => 'success', 'em_viagem' => 'primary', default => 'light' } }}">
+          {{ ucfirst(str_replace('_', ' ', $v->status)) }}
         </span>
       </td>
       <td>{{ number_format($v->quilometragem_atual, 0, ',', '.') }} km</td>

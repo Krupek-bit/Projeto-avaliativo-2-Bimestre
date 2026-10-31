@@ -39,7 +39,7 @@
     <label class="form-label">Status</label>
     <select name="status" class="form-select @error('status') is-invalid @enderror">
       @foreach(['ativo', 'em_viagem'] as $s)
-        <option value="{{ $s }}" @selected(old('status', $veiculo->status ?? 'ativo') === $s)>{{ ucfirst($s) }}</option>
+        <option value="{{ $s }}" @selected(old('status', $veiculo->status ?? 'ativo') === $s)>{{ ucfirst(str_replace('_', ' ', $s)) }}</option>
       @endforeach
     </select>
     @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
