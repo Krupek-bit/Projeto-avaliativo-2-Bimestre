@@ -20,6 +20,7 @@ class Veiculo extends Model
         'tipo',
         'capacidade',
         'status',
+        'ano',
         'quilometragem_atual',
     ];
 
@@ -28,6 +29,7 @@ class Veiculo extends Model
         return [
             'capacidade' => 'decimal:2',
             'quilometragem_atual' => 'integer',
+            'ano' => 'integer',
         ];
     }
 
