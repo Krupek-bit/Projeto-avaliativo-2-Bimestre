@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<div class="mt-4">
+<div class="mt-4 d-grid d-sm-flex gap-2">
   <button class="btn btn-success">Salvar</button>
   <a href="{{ route('veiculos.index') }}" class="btn btn-secondary">Cancelar</a>
 </div>
