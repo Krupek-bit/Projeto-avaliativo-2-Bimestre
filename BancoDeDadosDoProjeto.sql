@@ -5,7 +5,7 @@
 
 -- Dumped from database version 18.6 (4e5fd08)
 -- Dumped by pg_dump version 18.4
-
+    
 -- Started on 2026-10-29 20:18:16
 SET statement_timeout = 0;
 SET lock_timeout = 0;
