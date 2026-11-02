@@ -89,7 +89,6 @@ CREATE FUNCTION gabriel_trabalho_bd.fn_custo_total_veiculo(p_id_veiculo integer,
                      AND data_despesa BETWEEN p_data_inicio AND p_data_fim), 0);
 $$;
 
-
 ALTER FUNCTION gabriel_trabalho_bd.fn_custo_total_veiculo(p_id_veiculo integer, p_data_inicio date, p_data_fim date) OWNER TO neondb_owner;
 
 --
