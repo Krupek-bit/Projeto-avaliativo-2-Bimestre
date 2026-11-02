@@ -2498,6 +2498,5 @@ ALTER DEFAULT PRIVILEGES FOR ROLE cloud_admin IN SCHEMA public GRANT ALL ON TABL
 --
 -- PostgreSQL database dump complete
 --
-
 \unrestrict fRqWZbvdak6sMey4OzCoYWxAv8Ikaq6zgAcuRg0gD8oc7a8JyTNfeQj2uLT74ZJ
 
