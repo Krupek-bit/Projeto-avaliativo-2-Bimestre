@@ -95,7 +95,6 @@ ALTER FUNCTION gabriel_trabalho_bd.fn_custo_total_veiculo(p_id_veiculo integer, 
 -- TOC entry 244 (class 1255 OID 65584)
 -- Name: fn_motorista_apto(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
-
 CREATE FUNCTION gabriel_trabalho_bd.fn_motorista_apto(p_id_motorista integer) RETURNS boolean
     LANGUAGE plpgsql STABLE
     SET search_path TO 'gabriel_trabalho_bd', 'public'
