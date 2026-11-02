@@ -229,7 +229,6 @@ ALTER PROCEDURE gabriel_trabalho_bd.sp_iniciar_viagem(IN p_id_veiculo integer, I
 -- TOC entry 262 (class 1255 OID 65597)
 -- Name: sp_registrar_manutencao(integer, character varying, character varying, character varying, numeric, integer); Type: PROCEDURE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
-
 CREATE PROCEDURE gabriel_trabalho_bd.sp_registrar_manutencao(IN p_id_veiculo integer, IN p_tipo character varying, IN p_descricao character varying, IN p_oficina character varying, IN p_valor numeric, IN p_km integer)
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
