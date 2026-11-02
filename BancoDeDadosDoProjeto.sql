@@ -28,7 +28,6 @@ CREATE SCHEMA gabriel_trabalho_bd;
 
 
 ALTER SCHEMA gabriel_trabalho_bd OWNER TO neondb_owner;
-
 --
 -- TOC entry 242 (class 1255 OID 65582)
 -- Name: fn_consumo_medio(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
