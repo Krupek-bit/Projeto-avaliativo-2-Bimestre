@@ -66,7 +66,6 @@ BEGIN
 END;
 $$;
 
-
 ALTER FUNCTION gabriel_trabalho_bd.fn_consumo_medio(p_id_veiculo integer) OWNER TO neondb_owner;
 
 --
