@@ -123,7 +123,6 @@ BEGIN
 END;
 $$;
 
-
 ALTER FUNCTION gabriel_trabalho_bd.fn_motorista_apto(p_id_motorista integer) OWNER TO neondb_owner;
 
 --
