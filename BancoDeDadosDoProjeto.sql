@@ -185,7 +185,6 @@ $$;
 
 
 ALTER PROCEDURE gabriel_trabalho_bd.sp_finalizar_viagem(IN p_id_viagem integer, IN p_km_final integer) OWNER TO neondb_owner;
-
 --
 -- TOC entry 260 (class 1255 OID 65595)
 -- Name: sp_iniciar_viagem(integer, integer, character varying, character varying, integer); Type: PROCEDURE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
