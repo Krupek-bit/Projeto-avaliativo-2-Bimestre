@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Modalidade extends Model
 {
+    use HasUuids;
+
     protected $table = 'modalidade';
 
     protected $primaryKey = 'id';
