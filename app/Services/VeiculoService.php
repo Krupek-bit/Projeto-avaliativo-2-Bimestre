@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Veiculo;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class VeiculoService
 {
@@ -44,5 +45,63 @@ class VeiculoService
         }
 
         return (bool) $veiculo->delete();
+    }
+
+    // Funções PostgreSQL
+
+    public function consumoMedio(int $idVeiculo): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_consumo_medio(?)',
+            [$idVeiculo]
+        );
+    }
+
+    public function custoTotal(int $idVeiculo, string $inicio, string $fim): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_custo_total_veiculo(?, ?, ?)',
+            [$idVeiculo, $inicio, $fim]
+        );
+    }
+
+    public function gastoCombustivel(int $idVeiculo): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_gasto_combustivel(?)',
+            [$idVeiculo]
+        );
+    }
+
+    public function kmPercorridos(int $idVeiculo): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_km_percorridos(?)',
+            [$idVeiculo]
+        );
+    }
+
+    public function totalAbastecimentos(int $idVeiculo): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_total_abastecimentos(?)',
+            [$idVeiculo]
+        );
+    }
+
+    public function totalDespesas(int $idVeiculo): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_total_despesas(?)',
+            [$idVeiculo]
+        );
+    }
+
+    public function totalManutencao(int $idVeiculo): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_total_manutencao(?)',
+            [$idVeiculo]
+        );
     }
 }

@@ -4,7 +4,7 @@ set PGPASSWORD=1234
 
 set NEONURL=postgresql://neondb_owner:npg_j2S7AcosDryQ@ep-small-sound-ac44blz3.sa-east-1.aws.neon.tech/gabriel_trabalho_BD?sslmode=require
 
-psql.exe "%NEONURL%" -c "\dt gabriel_trabalho_bd.*"
+psql.exe "%NEONURL%" -c "\dt *"
 
 pg_dump.exe -Fc -f %USERPROFILE%\Documents\BackupDoBanco.dump "%NEONURL%"
 
@@ -12,4 +12,4 @@ psql.exe -h localhost -U postgres -c "CREATE DATABASE gabriel_trabalho_local;"
 
 pg_restore.exe -h localhost -U postgres -v -O -d gabriel_trabalho_local %USERPROFILE%\Documents\BackupDoBanco.dump
 
-psql.exe -h localhost -U postgres -d gabriel_trabalho_local -c "\dt gabriel_trabalho_bd.*"
+psql.exe -h localhost -U postgres -d gabriel_trabalho_local -c "\dt *"

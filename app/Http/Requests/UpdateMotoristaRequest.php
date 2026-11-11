@@ -27,7 +27,7 @@ class UpdateMotoristaRequest extends FormRequest
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('gabriel_trabalho_bd.motoristas', 'cnh')
+                Rule::unique('motoristas', 'cnh')
                     ->ignore($id, 'id_motorista'),
             ],
 

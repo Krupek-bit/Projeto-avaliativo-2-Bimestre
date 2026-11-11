@@ -15,7 +15,7 @@ class StoreMotoristaRequest extends FormRequest
     {
         return [
             'nome' => ['required', 'string', 'max:100'],
-            'cnh' => ['required', 'string', 'max:20', 'unique:gabriel_trabalho_bd.motoristas,cnh'],
+            'cnh' => ['required', 'string', 'max:20', 'unique:motoristas,cnh'],
             'categoria_cnh' => ['required', 'string', 'max:5'],
             'telefone' => ['nullable', 'string', 'max:20'],
             'data_admissao' => ['required', 'date'],

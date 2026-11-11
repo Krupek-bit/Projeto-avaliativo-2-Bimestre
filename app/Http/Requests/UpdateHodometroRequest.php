@@ -14,7 +14,7 @@ class UpdateHodometroRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_veiculo' => 'required|integer|exists:gabriel_trabalho_bd.veiculos,id_veiculo',
+            'id_veiculo' => 'required|integer|exists:veiculos,id_veiculo',
             'data_registro' => 'required|date',
             'quilometragem' => 'required|integer|min:0',
             'observacao' => 'nullable|string|max:255',

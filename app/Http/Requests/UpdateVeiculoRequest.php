@@ -25,7 +25,7 @@ class UpdateVeiculoRequest extends FormRequest
                 'required',
                 'string',
                 'max:10',
-                Rule::unique('gabriel_trabalho_bd.veiculos', 'placa')
+                Rule::unique('veiculos', 'placa')
                     ->ignore($id, 'id_veiculo'),
             ],
 

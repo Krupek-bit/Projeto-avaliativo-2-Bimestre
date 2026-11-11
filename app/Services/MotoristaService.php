@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Motorista;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class MotoristaService
 {
@@ -44,5 +45,23 @@ class MotoristaService
         }
 
         return (bool) $motorista->delete();
+    }
+
+    // Funções PostgreSQL
+
+    public function motoristaApto(int $idMotorista): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_motorista_apto(?)',
+            [$idMotorista]
+        );
+    }
+
+    public function totalViagens(int $idMotorista): mixed
+    {
+        return DB::scalar(
+            'SELECT fn_total_viagens_motorista(?)',
+            [$idMotorista]
+        );
     }
 }

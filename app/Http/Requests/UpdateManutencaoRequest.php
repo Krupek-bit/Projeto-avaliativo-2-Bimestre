@@ -14,7 +14,7 @@ class UpdateManutencaoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_veiculo' => 'required|integer|exists:gabriel_trabalho_bd.veiculos,id_veiculo',
+            'id_veiculo' => 'required|integer|exists:veiculos,id_veiculo',
             'data_manutencao' => 'required|date',
             'tipo_manutencao' => 'required|string|max:50',
             'descricao' => 'required|string|max:255',

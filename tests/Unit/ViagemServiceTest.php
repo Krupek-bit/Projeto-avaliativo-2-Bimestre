@@ -166,7 +166,7 @@ class ViagemServiceTest extends TestCase
         $this->assertCount(1, $consultas);
 
         $this->assertSame(
-            "CALL gabriel_trabalho_bd.sp_iniciar_viagem(1, 1, 'Curitiba', 'Transporte de mercadorias', 1000)",
+            "CALL sp_iniciar_viagem(1, 1, 'Curitiba', 'Transporte de mercadorias', 1000)",
             $consultas[0]['query']
         );
     }
@@ -180,7 +180,7 @@ class ViagemServiceTest extends TestCase
         $this->assertCount(1, $consultas);
 
         $this->assertSame(
-            'CALL gabriel_trabalho_bd.sp_finalizar_viagem(1, 1500)',
+            'CALL sp_finalizar_viagem(1, 1500)',
             $consultas[0]['query']
         );
     }
@@ -199,7 +199,7 @@ class ViagemServiceTest extends TestCase
         $this->assertCount(1, $consultas);
 
         $this->assertSame(
-            "CALL gabriel_trabalho_bd.sp_iniciar_viagem(1, 1, 'Curitiba', null, 1000)",
+            "CALL sp_iniciar_viagem(1, 1, 'Curitiba', null, 1000)",
             $consultas[0]['query']
         );
     }

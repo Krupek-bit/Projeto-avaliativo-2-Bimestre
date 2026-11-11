@@ -24,7 +24,7 @@ class ManutencaoService
     public function registrar(array $dados): void
     {
         DB::statement(
-            'CALL gabriel_trabalho_bd.sp_registrar_manutencao(?, ?, ?, ?, ?, ?)',
+            'CALL sp_registrar_manutencao(?, ?, ?, ?, ?, ?)',
             [
                 $dados['id_veiculo'],
                 $dados['tipo_manutencao'],
@@ -39,7 +39,7 @@ class ManutencaoService
     public function concluir(int $idVeiculo): void
     {
         DB::statement(
-            'CALL gabriel_trabalho_bd.sp_concluir_manutencao(?)',
+            'CALL sp_concluir_manutencao(?)',
             [
                 $idVeiculo,
             ]

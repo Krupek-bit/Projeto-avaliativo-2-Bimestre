@@ -14,7 +14,7 @@ class StoreVeiculoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'placa' => ['required', 'string', 'max:10', 'unique:gabriel_trabalho_bd.veiculos,placa'],
+            'placa' => ['required', 'string', 'max:10', 'unique:veiculos,placa'],
             'marca' => ['required', 'string', 'max:50'],
             'modelo' => ['required', 'string', 'max:50'],
             'ano' => ['required', 'integer', 'min:1900', 'max:' . (date('Y') + 1)],

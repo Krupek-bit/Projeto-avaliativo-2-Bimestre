@@ -14,7 +14,7 @@ class StoreAbastecimentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_veiculo' => 'required|integer|exists:gabriel_trabalho_bd.veiculos,id_veiculo',
+            'id_veiculo' => 'required|integer|exists:veiculos,id_veiculo',
             'data_abastecimento' => 'required|date',
             'tipo_combustivel' => 'required|string|max:30',
             'litros' => 'required|numeric|gt:0',

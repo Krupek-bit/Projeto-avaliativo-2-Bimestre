@@ -55,7 +55,7 @@ COMMENT ON SCHEMA public IS 'standard public schema';
 -- Name: fn_consumo_medio(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_consumo_medio(p_id_veiculo integer) RETURNS numeric
+CREATE FUNCTION fn_consumo_medio(p_id_veiculo integer) RETURNS numeric
     LANGUAGE plpgsql STABLE
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -89,14 +89,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_consumo_medio(p_id_veiculo integer) OWNER TO neondb_owner;
+ALTER FUNCTION fn_consumo_medio(p_id_veiculo integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 266 (class 1255 OID 65583)
 -- Name: fn_custo_total_veiculo(integer, date, date); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_custo_total_veiculo(p_id_veiculo integer, p_data_inicio date, p_data_fim date) RETURNS numeric
+CREATE FUNCTION fn_custo_total_veiculo(p_id_veiculo integer, p_data_inicio date, p_data_fim date) RETURNS numeric
     LANGUAGE sql STABLE
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -113,14 +113,14 @@ CREATE FUNCTION gabriel_trabalho_bd.fn_custo_total_veiculo(p_id_veiculo integer,
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_custo_total_veiculo(p_id_veiculo integer, p_data_inicio date, p_data_fim date) OWNER TO neondb_owner;
+ALTER FUNCTION fn_custo_total_veiculo(p_id_veiculo integer, p_data_inicio date, p_data_fim date) OWNER TO neondb_owner;
 
 --
 -- TOC entry 250 (class 1255 OID 90116)
 -- Name: fn_gasto_combustivel(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_gasto_combustivel(p_id_veiculo integer) RETURNS numeric
+CREATE FUNCTION fn_gasto_combustivel(p_id_veiculo integer) RETURNS numeric
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -128,7 +128,7 @@ DECLARE
 BEGIN
     SELECT COALESCE(SUM(valor_total), 0)
     INTO v_total
-    FROM gabriel_trabalho_bd.abastecimentos
+    FROM abastecimentos
     WHERE id_veiculo = p_id_veiculo;
 
     RETURN v_total;
@@ -136,14 +136,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_gasto_combustivel(p_id_veiculo integer) OWNER TO neondb_owner;
+ALTER FUNCTION fn_gasto_combustivel(p_id_veiculo integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 248 (class 1255 OID 90114)
 -- Name: fn_km_percorridos(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_km_percorridos(p_id_veiculo integer) RETURNS bigint
+CREATE FUNCTION fn_km_percorridos(p_id_veiculo integer) RETURNS bigint
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -151,7 +151,7 @@ DECLARE
 BEGIN
     SELECT COALESCE(SUM(km_final - km_inicial), 0)
     INTO v_km
-    FROM gabriel_trabalho_bd.viagens
+    FROM viagens
     WHERE id_veiculo = p_id_veiculo;
 
     RETURN v_km;
@@ -159,14 +159,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_km_percorridos(p_id_veiculo integer) OWNER TO neondb_owner;
+ALTER FUNCTION fn_km_percorridos(p_id_veiculo integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 267 (class 1255 OID 65584)
 -- Name: fn_motorista_apto(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_motorista_apto(p_id_motorista integer) RETURNS boolean
+CREATE FUNCTION fn_motorista_apto(p_id_motorista integer) RETURNS boolean
     LANGUAGE plpgsql STABLE
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -195,14 +195,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_motorista_apto(p_id_motorista integer) OWNER TO neondb_owner;
+ALTER FUNCTION fn_motorista_apto(p_id_motorista integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 251 (class 1255 OID 90117)
 -- Name: fn_total_abastecimentos(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_total_abastecimentos(p_id_veiculo integer) RETURNS bigint
+CREATE FUNCTION fn_total_abastecimentos(p_id_veiculo integer) RETURNS bigint
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -210,7 +210,7 @@ DECLARE
 BEGIN
     SELECT COUNT(*)
     INTO v_quantidade
-    FROM gabriel_trabalho_bd.abastecimentos
+    FROM abastecimentos
     WHERE id_veiculo = p_id_veiculo;
 
     RETURN v_quantidade;
@@ -218,14 +218,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_total_abastecimentos(p_id_veiculo integer) OWNER TO neondb_owner;
+ALTER FUNCTION fn_total_abastecimentos(p_id_veiculo integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 273 (class 1255 OID 90112)
 -- Name: fn_total_despesas(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_total_despesas(p_id_veiculo integer) RETURNS numeric
+CREATE FUNCTION fn_total_despesas(p_id_veiculo integer) RETURNS numeric
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -233,7 +233,7 @@ DECLARE
 BEGIN
     SELECT COALESCE(SUM(valor), 0)
     INTO v_total
-    FROM gabriel_trabalho_bd.despesas
+    FROM despesas
     WHERE id_veiculo = p_id_veiculo;
 
     RETURN v_total;
@@ -241,14 +241,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_total_despesas(p_id_veiculo integer) OWNER TO neondb_owner;
+ALTER FUNCTION fn_total_despesas(p_id_veiculo integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 274 (class 1255 OID 90113)
 -- Name: fn_total_manutencao(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_total_manutencao(p_id_veiculo integer) RETURNS numeric
+CREATE FUNCTION fn_total_manutencao(p_id_veiculo integer) RETURNS numeric
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -256,7 +256,7 @@ DECLARE
 BEGIN
     SELECT COALESCE(SUM(valor), 0)
     INTO v_total
-    FROM gabriel_trabalho_bd.manutencoes
+    FROM manutencoes
     WHERE id_veiculo = p_id_veiculo;
 
     RETURN v_total;
@@ -264,14 +264,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_total_manutencao(p_id_veiculo integer) OWNER TO neondb_owner;
+ALTER FUNCTION fn_total_manutencao(p_id_veiculo integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 249 (class 1255 OID 90115)
 -- Name: fn_total_viagens_motorista(integer); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.fn_total_viagens_motorista(p_id_motorista integer) RETURNS bigint
+CREATE FUNCTION fn_total_viagens_motorista(p_id_motorista integer) RETURNS bigint
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -279,7 +279,7 @@ DECLARE
 BEGIN
     SELECT COUNT(*)
     INTO v_quantidade
-    FROM gabriel_trabalho_bd.viagens
+    FROM viagens
     WHERE id_motorista = p_id_motorista;
 
     RETURN v_quantidade;
@@ -287,14 +287,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.fn_total_viagens_motorista(p_id_motorista integer) OWNER TO neondb_owner;
+ALTER FUNCTION fn_total_viagens_motorista(p_id_motorista integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 265 (class 1255 OID 65598)
 -- Name: sp_concluir_manutencao(integer); Type: PROCEDURE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE PROCEDURE gabriel_trabalho_bd.sp_concluir_manutencao(IN p_id_veiculo integer)
+CREATE PROCEDURE sp_concluir_manutencao(IN p_id_veiculo integer)
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -309,14 +309,14 @@ END;
 $$;
 
 
-ALTER PROCEDURE gabriel_trabalho_bd.sp_concluir_manutencao(IN p_id_veiculo integer) OWNER TO neondb_owner;
+ALTER PROCEDURE sp_concluir_manutencao(IN p_id_veiculo integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 272 (class 1255 OID 65596)
 -- Name: sp_finalizar_viagem(integer, integer); Type: PROCEDURE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE PROCEDURE gabriel_trabalho_bd.sp_finalizar_viagem(IN p_id_viagem integer, IN p_km_final integer)
+CREATE PROCEDURE sp_finalizar_viagem(IN p_id_viagem integer, IN p_km_final integer)
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -348,14 +348,14 @@ END;
 $$;
 
 
-ALTER PROCEDURE gabriel_trabalho_bd.sp_finalizar_viagem(IN p_id_viagem integer, IN p_km_final integer) OWNER TO neondb_owner;
+ALTER PROCEDURE sp_finalizar_viagem(IN p_id_viagem integer, IN p_km_final integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 271 (class 1255 OID 65595)
 -- Name: sp_iniciar_viagem(integer, integer, character varying, character varying, integer); Type: PROCEDURE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE PROCEDURE gabriel_trabalho_bd.sp_iniciar_viagem(IN p_id_veiculo integer, IN p_id_motorista integer, IN p_destino character varying, IN p_finalidade character varying, IN p_km_inicial integer)
+CREATE PROCEDURE sp_iniciar_viagem(IN p_id_veiculo integer, IN p_id_motorista integer, IN p_destino character varying, IN p_finalidade character varying, IN p_km_inicial integer)
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -388,14 +388,14 @@ END;
 $$;
 
 
-ALTER PROCEDURE gabriel_trabalho_bd.sp_iniciar_viagem(IN p_id_veiculo integer, IN p_id_motorista integer, IN p_destino character varying, IN p_finalidade character varying, IN p_km_inicial integer) OWNER TO neondb_owner;
+ALTER PROCEDURE sp_iniciar_viagem(IN p_id_veiculo integer, IN p_id_motorista integer, IN p_destino character varying, IN p_finalidade character varying, IN p_km_inicial integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 275 (class 1255 OID 65597)
 -- Name: sp_registrar_manutencao(integer, character varying, character varying, character varying, numeric, integer); Type: PROCEDURE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE PROCEDURE gabriel_trabalho_bd.sp_registrar_manutencao(IN p_id_veiculo integer, IN p_tipo character varying, IN p_descricao character varying, IN p_oficina character varying, IN p_valor numeric, IN p_km integer)
+CREATE PROCEDURE sp_registrar_manutencao(IN p_id_veiculo integer, IN p_tipo character varying, IN p_descricao character varying, IN p_oficina character varying, IN p_valor numeric, IN p_km integer)
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -420,14 +420,14 @@ END;
 $$;
 
 
-ALTER PROCEDURE gabriel_trabalho_bd.sp_registrar_manutencao(IN p_id_veiculo integer, IN p_tipo character varying, IN p_descricao character varying, IN p_oficina character varying, IN p_valor numeric, IN p_km integer) OWNER TO neondb_owner;
+ALTER PROCEDURE sp_registrar_manutencao(IN p_id_veiculo integer, IN p_tipo character varying, IN p_descricao character varying, IN p_oficina character varying, IN p_valor numeric, IN p_km integer) OWNER TO neondb_owner;
 
 --
 -- TOC entry 268 (class 1255 OID 65585)
 -- Name: tg_fn_abastecimento_valida(); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.tg_fn_abastecimento_valida() RETURNS trigger
+CREATE FUNCTION tg_fn_abastecimento_valida() RETURNS trigger
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -452,14 +452,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.tg_fn_abastecimento_valida() OWNER TO neondb_owner;
+ALTER FUNCTION tg_fn_abastecimento_valida() OWNER TO neondb_owner;
 
 --
 -- TOC entry 262 (class 1255 OID 65591)
 -- Name: tg_fn_atualiza_km_veiculo(); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.tg_fn_atualiza_km_veiculo() RETURNS trigger
+CREATE FUNCTION tg_fn_atualiza_km_veiculo() RETURNS trigger
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -472,14 +472,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.tg_fn_atualiza_km_veiculo() OWNER TO neondb_owner;
+ALTER FUNCTION tg_fn_atualiza_km_veiculo() OWNER TO neondb_owner;
 
 --
 -- TOC entry 269 (class 1255 OID 65587)
 -- Name: tg_fn_veiculo_historico_status(); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.tg_fn_veiculo_historico_status() RETURNS trigger
+CREATE FUNCTION tg_fn_veiculo_historico_status() RETURNS trigger
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -491,14 +491,14 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.tg_fn_veiculo_historico_status() OWNER TO neondb_owner;
+ALTER FUNCTION tg_fn_veiculo_historico_status() OWNER TO neondb_owner;
 
 --
 -- TOC entry 270 (class 1255 OID 65589)
 -- Name: tg_fn_viagem_valida(); Type: FUNCTION; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE FUNCTION gabriel_trabalho_bd.tg_fn_viagem_valida() RETURNS trigger
+CREATE FUNCTION tg_fn_viagem_valida() RETURNS trigger
     LANGUAGE plpgsql
     SET search_path TO 'gabriel_trabalho_bd', 'public'
     AS $$
@@ -531,7 +531,7 @@ END;
 $$;
 
 
-ALTER FUNCTION gabriel_trabalho_bd.tg_fn_viagem_valida() OWNER TO neondb_owner;
+ALTER FUNCTION tg_fn_viagem_valida() OWNER TO neondb_owner;
 
 SET default_tablespace = '';
 
@@ -542,7 +542,7 @@ SET default_table_access_method = heap;
 -- Name: abastecimentos; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.abastecimentos (
+CREATE TABLE abastecimentos (
     id_abastecimento integer NOT NULL,
     id_veiculo integer NOT NULL,
     data_abastecimento date NOT NULL,
@@ -558,14 +558,14 @@ CREATE TABLE gabriel_trabalho_bd.abastecimentos (
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.abastecimentos OWNER TO neondb_owner;
+ALTER TABLE abastecimentos OWNER TO neondb_owner;
 
 --
 -- TOC entry 227 (class 1259 OID 32820)
 -- Name: abastecimentos_id_abastecimento_seq; Type: SEQUENCE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE SEQUENCE gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq
+CREATE SEQUENCE abastecimentos_id_abastecimento_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -574,7 +574,7 @@ CREATE SEQUENCE gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq
     CACHE 1;
 
 
-ALTER SEQUENCE gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq OWNER TO neondb_owner;
+ALTER SEQUENCE abastecimentos_id_abastecimento_seq OWNER TO neondb_owner;
 
 --
 -- TOC entry 3660 (class 0 OID 0)
@@ -582,7 +582,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq OWNER TO 
 -- Name: abastecimentos_id_abastecimento_seq; Type: SEQUENCE OWNED BY; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER SEQUENCE gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq OWNED BY gabriel_trabalho_bd.abastecimentos.id_abastecimento;
+ALTER SEQUENCE abastecimentos_id_abastecimento_seq OWNED BY abastecimentos.id_abastecimento;
 
 
 --
@@ -590,7 +590,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq OWNED BY 
 -- Name: despesas; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.despesas (
+CREATE TABLE despesas (
     id_despesa integer NOT NULL,
     id_veiculo integer NOT NULL,
     data_despesa date NOT NULL,
@@ -601,14 +601,14 @@ CREATE TABLE gabriel_trabalho_bd.despesas (
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.despesas OWNER TO neondb_owner;
+ALTER TABLE despesas OWNER TO neondb_owner;
 
 --
 -- TOC entry 231 (class 1259 OID 32859)
 -- Name: despesas_id_despesa_seq; Type: SEQUENCE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE SEQUENCE gabriel_trabalho_bd.despesas_id_despesa_seq
+CREATE SEQUENCE despesas_id_despesa_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -617,7 +617,7 @@ CREATE SEQUENCE gabriel_trabalho_bd.despesas_id_despesa_seq
     CACHE 1;
 
 
-ALTER SEQUENCE gabriel_trabalho_bd.despesas_id_despesa_seq OWNER TO neondb_owner;
+ALTER SEQUENCE despesas_id_despesa_seq OWNER TO neondb_owner;
 
 --
 -- TOC entry 3663 (class 0 OID 0)
@@ -625,7 +625,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.despesas_id_despesa_seq OWNER TO neondb_owner
 -- Name: despesas_id_despesa_seq; Type: SEQUENCE OWNED BY; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER SEQUENCE gabriel_trabalho_bd.despesas_id_despesa_seq OWNED BY gabriel_trabalho_bd.despesas.id_despesa;
+ALTER SEQUENCE despesas_id_despesa_seq OWNED BY despesas.id_despesa;
 
 
 --
@@ -633,7 +633,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.despesas_id_despesa_seq OWNED BY gabriel_trab
 -- Name: historico_status_veiculo; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.historico_status_veiculo (
+CREATE TABLE historico_status_veiculo (
     id_historico integer NOT NULL,
     id_veiculo integer NOT NULL,
     status_anterior character varying(20),
@@ -642,14 +642,14 @@ CREATE TABLE gabriel_trabalho_bd.historico_status_veiculo (
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.historico_status_veiculo OWNER TO neondb_owner;
+ALTER TABLE historico_status_veiculo OWNER TO neondb_owner;
 
 --
 -- TOC entry 240 (class 1259 OID 65538)
 -- Name: historico_status_veiculo_id_historico_seq; Type: SEQUENCE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE SEQUENCE gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq
+CREATE SEQUENCE historico_status_veiculo_id_historico_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -658,7 +658,7 @@ CREATE SEQUENCE gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq
     CACHE 1;
 
 
-ALTER SEQUENCE gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq OWNER TO neondb_owner;
+ALTER SEQUENCE historico_status_veiculo_id_historico_seq OWNER TO neondb_owner;
 
 --
 -- TOC entry 3666 (class 0 OID 0)
@@ -666,7 +666,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq OWN
 -- Name: historico_status_veiculo_id_historico_seq; Type: SEQUENCE OWNED BY; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER SEQUENCE gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq OWNED BY gabriel_trabalho_bd.historico_status_veiculo.id_historico;
+ALTER SEQUENCE historico_status_veiculo_id_historico_seq OWNED BY historico_status_veiculo.id_historico;
 
 
 --
@@ -674,7 +674,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq OWN
 -- Name: hodometros; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.hodometros (
+CREATE TABLE hodometros (
     id_hodometro integer NOT NULL,
     id_veiculo integer NOT NULL,
     data_registro date NOT NULL,
@@ -683,14 +683,14 @@ CREATE TABLE gabriel_trabalho_bd.hodometros (
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.hodometros OWNER TO neondb_owner;
+ALTER TABLE hodometros OWNER TO neondb_owner;
 
 --
 -- TOC entry 225 (class 1259 OID 32804)
 -- Name: hodometros_id_hodometro_seq; Type: SEQUENCE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE SEQUENCE gabriel_trabalho_bd.hodometros_id_hodometro_seq
+CREATE SEQUENCE hodometros_id_hodometro_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -699,7 +699,7 @@ CREATE SEQUENCE gabriel_trabalho_bd.hodometros_id_hodometro_seq
     CACHE 1;
 
 
-ALTER SEQUENCE gabriel_trabalho_bd.hodometros_id_hodometro_seq OWNER TO neondb_owner;
+ALTER SEQUENCE hodometros_id_hodometro_seq OWNER TO neondb_owner;
 
 --
 -- TOC entry 3669 (class 0 OID 0)
@@ -707,7 +707,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.hodometros_id_hodometro_seq OWNER TO neondb_o
 -- Name: hodometros_id_hodometro_seq; Type: SEQUENCE OWNED BY; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER SEQUENCE gabriel_trabalho_bd.hodometros_id_hodometro_seq OWNED BY gabriel_trabalho_bd.hodometros.id_hodometro;
+ALTER SEQUENCE hodometros_id_hodometro_seq OWNED BY hodometros.id_hodometro;
 
 
 --
@@ -715,7 +715,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.hodometros_id_hodometro_seq OWNED BY gabriel_
 -- Name: manutencoes; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.manutencoes (
+CREATE TABLE manutencoes (
     id_manutencao integer NOT NULL,
     id_veiculo integer NOT NULL,
     data_manutencao date NOT NULL,
@@ -728,14 +728,14 @@ CREATE TABLE gabriel_trabalho_bd.manutencoes (
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.manutencoes OWNER TO neondb_owner;
+ALTER TABLE manutencoes OWNER TO neondb_owner;
 
 --
 -- TOC entry 229 (class 1259 OID 32840)
 -- Name: manutencoes_id_manutencao_seq; Type: SEQUENCE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE SEQUENCE gabriel_trabalho_bd.manutencoes_id_manutencao_seq
+CREATE SEQUENCE manutencoes_id_manutencao_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -744,7 +744,7 @@ CREATE SEQUENCE gabriel_trabalho_bd.manutencoes_id_manutencao_seq
     CACHE 1;
 
 
-ALTER SEQUENCE gabriel_trabalho_bd.manutencoes_id_manutencao_seq OWNER TO neondb_owner;
+ALTER SEQUENCE manutencoes_id_manutencao_seq OWNER TO neondb_owner;
 
 --
 -- TOC entry 3672 (class 0 OID 0)
@@ -752,7 +752,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.manutencoes_id_manutencao_seq OWNER TO neondb
 -- Name: manutencoes_id_manutencao_seq; Type: SEQUENCE OWNED BY; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER SEQUENCE gabriel_trabalho_bd.manutencoes_id_manutencao_seq OWNED BY gabriel_trabalho_bd.manutencoes.id_manutencao;
+ALTER SEQUENCE manutencoes_id_manutencao_seq OWNED BY manutencoes.id_manutencao;
 
 
 --
@@ -760,21 +760,21 @@ ALTER SEQUENCE gabriel_trabalho_bd.manutencoes_id_manutencao_seq OWNED BY gabrie
 -- Name: modalidade; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.modalidade (
+CREATE TABLE modalidade (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     nome character varying(100) NOT NULL,
     descricao character varying(255)
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.modalidade OWNER TO neondb_owner;
+ALTER TABLE modalidade OWNER TO neondb_owner;
 
 --
 -- TOC entry 224 (class 1259 OID 32785)
 -- Name: motoristas; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.motoristas (
+CREATE TABLE motoristas (
     id_motorista integer NOT NULL,
     nome character varying(100) NOT NULL,
     cnh character varying(20) NOT NULL,
@@ -787,14 +787,14 @@ CREATE TABLE gabriel_trabalho_bd.motoristas (
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.motoristas OWNER TO neondb_owner;
+ALTER TABLE motoristas OWNER TO neondb_owner;
 
 --
 -- TOC entry 223 (class 1259 OID 32784)
 -- Name: motoristas_id_motorista_seq; Type: SEQUENCE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE SEQUENCE gabriel_trabalho_bd.motoristas_id_motorista_seq
+CREATE SEQUENCE motoristas_id_motorista_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -803,7 +803,7 @@ CREATE SEQUENCE gabriel_trabalho_bd.motoristas_id_motorista_seq
     CACHE 1;
 
 
-ALTER SEQUENCE gabriel_trabalho_bd.motoristas_id_motorista_seq OWNER TO neondb_owner;
+ALTER SEQUENCE motoristas_id_motorista_seq OWNER TO neondb_owner;
 
 --
 -- TOC entry 3676 (class 0 OID 0)
@@ -811,7 +811,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.motoristas_id_motorista_seq OWNER TO neondb_o
 -- Name: motoristas_id_motorista_seq; Type: SEQUENCE OWNED BY; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER SEQUENCE gabriel_trabalho_bd.motoristas_id_motorista_seq OWNED BY gabriel_trabalho_bd.motoristas.id_motorista;
+ALTER SEQUENCE motoristas_id_motorista_seq OWNED BY motoristas.id_motorista;
 
 
 --
@@ -819,7 +819,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.motoristas_id_motorista_seq OWNED BY gabriel_
 -- Name: veiculos; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.veiculos (
+CREATE TABLE veiculos (
     id_veiculo integer NOT NULL,
     placa character varying(10) NOT NULL,
     marca character varying(50) NOT NULL,
@@ -834,14 +834,14 @@ CREATE TABLE gabriel_trabalho_bd.veiculos (
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.veiculos OWNER TO neondb_owner;
+ALTER TABLE veiculos OWNER TO neondb_owner;
 
 --
 -- TOC entry 245 (class 1259 OID 73770)
 -- Name: mv_consumo_veiculos; Type: MATERIALIZED VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_consumo_veiculos AS
+CREATE MATERIALIZED VIEW mv_consumo_veiculos AS
  WITH base AS (
          SELECT abastecimentos.id_veiculo,
             min(abastecimentos.quilometragem) AS km_min,
@@ -849,12 +849,12 @@ CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_consumo_veiculos AS
             sum(abastecimentos.litros) AS litros_total,
             sum(abastecimentos.valor_total) AS valor_total,
             count(*) AS qtd_abastecimentos
-           FROM gabriel_trabalho_bd.abastecimentos
+           FROM abastecimentos
           GROUP BY abastecimentos.id_veiculo
         ), primeiro AS (
          SELECT DISTINCT ON (a.id_veiculo) a.id_veiculo,
             a.litros
-           FROM (gabriel_trabalho_bd.abastecimentos a
+           FROM (abastecimentos a
              JOIN base b_1 ON (((b_1.id_veiculo = a.id_veiculo) AND (a.quilometragem = b_1.km_min))))
           ORDER BY a.id_veiculo, a.data_abastecimento
         )
@@ -876,20 +876,20 @@ CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_consumo_veiculos AS
             WHEN (b.km_max > b.km_min) THEN round((b.valor_total / ((b.km_max - b.km_min))::numeric), 2)
             ELSE NULL::numeric
         END AS custo_combustivel_por_km
-   FROM ((gabriel_trabalho_bd.veiculos v
+   FROM ((veiculos v
      LEFT JOIN base b ON ((b.id_veiculo = v.id_veiculo)))
      LEFT JOIN primeiro p ON ((p.id_veiculo = v.id_veiculo)))
   WITH NO DATA;
 
 
-ALTER MATERIALIZED VIEW gabriel_trabalho_bd.mv_consumo_veiculos OWNER TO neondb_owner;
+ALTER MATERIALIZED VIEW mv_consumo_veiculos OWNER TO neondb_owner;
 
 --
 -- TOC entry 234 (class 1259 OID 32877)
 -- Name: viagens; Type: TABLE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TABLE gabriel_trabalho_bd.viagens (
+CREATE TABLE viagens (
     id_viagem integer NOT NULL,
     id_veiculo integer NOT NULL,
     id_motorista integer NOT NULL,
@@ -905,65 +905,65 @@ CREATE TABLE gabriel_trabalho_bd.viagens (
 );
 
 
-ALTER TABLE gabriel_trabalho_bd.viagens OWNER TO neondb_owner;
+ALTER TABLE viagens OWNER TO neondb_owner;
 
 --
 -- TOC entry 247 (class 1259 OID 73795)
 -- Name: mv_dashboard_frota; Type: MATERIALIZED VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_dashboard_frota AS
+CREATE MATERIALIZED VIEW mv_dashboard_frota AS
  SELECT 1 AS id,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.veiculos) AS total_veiculos,
+           FROM veiculos) AS total_veiculos,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.veiculos
+           FROM veiculos
           WHERE ((veiculos.status)::text = 'ativo'::text)) AS veiculos_ativos,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.veiculos
+           FROM veiculos
           WHERE ((veiculos.status)::text = 'em_viagem'::text)) AS veiculos_em_viagem,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.veiculos
+           FROM veiculos
           WHERE ((veiculos.status)::text = 'em_manutencao'::text)) AS veiculos_em_manutencao,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.veiculos
+           FROM veiculos
           WHERE ((veiculos.status)::text = 'inativo'::text)) AS veiculos_inativos,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.motoristas
+           FROM motoristas
           WHERE ((motoristas.status)::text = 'ativo'::text)) AS motoristas_ativos,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.motoristas
+           FROM motoristas
           WHERE ((motoristas.status)::text = 'inativo'::text)) AS motoristas_inativos,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.viagens) AS total_viagens,
+           FROM viagens) AS total_viagens,
     ( SELECT count(*) AS count
-           FROM gabriel_trabalho_bd.viagens
+           FROM viagens
           WHERE (viagens.data_retorno IS NULL)) AS viagens_em_andamento,
     ( SELECT COALESCE(sum((viagens.km_final - viagens.km_inicial)), (0)::bigint) AS "coalesce"
-           FROM gabriel_trabalho_bd.viagens
+           FROM viagens
           WHERE (viagens.km_final IS NOT NULL)) AS km_total_viagens,
     ( SELECT COALESCE(sum(abastecimentos.valor_total), (0)::numeric) AS "coalesce"
-           FROM gabriel_trabalho_bd.abastecimentos) AS gasto_abastecimento,
+           FROM abastecimentos) AS gasto_abastecimento,
     ( SELECT COALESCE(sum(manutencoes.valor), (0)::numeric) AS "coalesce"
-           FROM gabriel_trabalho_bd.manutencoes) AS gasto_manutencao,
+           FROM manutencoes) AS gasto_manutencao,
     ( SELECT COALESCE(sum(despesas.valor), (0)::numeric) AS "coalesce"
-           FROM gabriel_trabalho_bd.despesas) AS gasto_despesas,
+           FROM despesas) AS gasto_despesas,
     ((( SELECT COALESCE(sum(abastecimentos.valor_total), (0)::numeric) AS "coalesce"
-           FROM gabriel_trabalho_bd.abastecimentos) + ( SELECT COALESCE(sum(manutencoes.valor), (0)::numeric) AS "coalesce"
-           FROM gabriel_trabalho_bd.manutencoes)) + ( SELECT COALESCE(sum(despesas.valor), (0)::numeric) AS "coalesce"
-           FROM gabriel_trabalho_bd.despesas)) AS gasto_total,
+           FROM abastecimentos) + ( SELECT COALESCE(sum(manutencoes.valor), (0)::numeric) AS "coalesce"
+           FROM manutencoes)) + ( SELECT COALESCE(sum(despesas.valor), (0)::numeric) AS "coalesce"
+           FROM despesas)) AS gasto_total,
     now() AS atualizado_em
   WITH NO DATA;
 
 
-ALTER MATERIALIZED VIEW gabriel_trabalho_bd.mv_dashboard_frota OWNER TO neondb_owner;
+ALTER MATERIALIZED VIEW mv_dashboard_frota OWNER TO neondb_owner;
 
 --
 -- TOC entry 244 (class 1259 OID 73756)
 -- Name: mv_desempenho_motoristas; Type: MATERIALIZED VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_desempenho_motoristas AS
+CREATE MATERIALIZED VIEW mv_desempenho_motoristas AS
  SELECT m.id_motorista,
     m.nome,
     m.categoria_cnh,
@@ -981,38 +981,38 @@ CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_desempenho_motoristas AS
     COALESCE(sum((vi.km_final - vi.km_inicial)) FILTER (WHERE (vi.km_final IS NOT NULL)), (0)::bigint) AS km_percorridos,
     avg((vi.data_retorno - vi.data_saida)) AS duracao_media,
     max(vi.data_saida) AS ultima_saida
-   FROM (gabriel_trabalho_bd.motoristas m
-     LEFT JOIN gabriel_trabalho_bd.viagens vi ON ((vi.id_motorista = m.id_motorista)))
+   FROM (motoristas m
+     LEFT JOIN viagens vi ON ((vi.id_motorista = m.id_motorista)))
   GROUP BY m.id_motorista, m.nome, m.categoria_cnh, m.status, m.validade_cnh
   WITH NO DATA;
 
 
-ALTER MATERIALIZED VIEW gabriel_trabalho_bd.mv_desempenho_motoristas OWNER TO neondb_owner;
+ALTER MATERIALIZED VIEW mv_desempenho_motoristas OWNER TO neondb_owner;
 
 --
 -- TOC entry 243 (class 1259 OID 73742)
 -- Name: mv_gastos_mensais; Type: MATERIALIZED VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_mensais AS
+CREATE MATERIALIZED VIEW mv_gastos_mensais AS
  WITH lancamentos AS (
          SELECT abastecimentos.id_veiculo,
             abastecimentos.data_abastecimento AS data,
             'abastecimento'::text AS categoria,
             abastecimentos.valor_total AS valor
-           FROM gabriel_trabalho_bd.abastecimentos
+           FROM abastecimentos
         UNION ALL
          SELECT manutencoes.id_veiculo,
             manutencoes.data_manutencao,
             'manutencao'::text,
             manutencoes.valor
-           FROM gabriel_trabalho_bd.manutencoes
+           FROM manutencoes
         UNION ALL
          SELECT despesas.id_veiculo,
             despesas.data_despesa,
             'despesa'::text,
             despesas.valor
-           FROM gabriel_trabalho_bd.despesas
+           FROM despesas
         )
  SELECT l.id_veiculo,
     v.placa,
@@ -1021,37 +1021,37 @@ CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_mensais AS
     sum(l.valor) AS valor_total,
     count(*) AS qtd_lancamentos
    FROM (lancamentos l
-     JOIN gabriel_trabalho_bd.veiculos v ON ((v.id_veiculo = l.id_veiculo)))
+     JOIN veiculos v ON ((v.id_veiculo = l.id_veiculo)))
   GROUP BY l.id_veiculo, v.placa, (date_trunc('month'::text, (l.data)::timestamp with time zone)), l.categoria
   WITH NO DATA;
 
 
-ALTER MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_mensais OWNER TO neondb_owner;
+ALTER MATERIALIZED VIEW mv_gastos_mensais OWNER TO neondb_owner;
 
 --
 -- TOC entry 242 (class 1259 OID 73728)
 -- Name: mv_gastos_veiculos; Type: MATERIALIZED VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_veiculos AS
+CREATE MATERIALIZED VIEW mv_gastos_veiculos AS
  WITH ab AS (
          SELECT abastecimentos.id_veiculo,
             sum(abastecimentos.valor_total) AS total,
             sum(abastecimentos.litros) AS litros,
             count(*) AS qtd
-           FROM gabriel_trabalho_bd.abastecimentos
+           FROM abastecimentos
           GROUP BY abastecimentos.id_veiculo
         ), ma AS (
          SELECT manutencoes.id_veiculo,
             sum(manutencoes.valor) AS total,
             count(*) AS qtd
-           FROM gabriel_trabalho_bd.manutencoes
+           FROM manutencoes
           GROUP BY manutencoes.id_veiculo
         ), de AS (
          SELECT despesas.id_veiculo,
             sum(despesas.valor) AS total,
             count(*) AS qtd
-           FROM gabriel_trabalho_bd.despesas
+           FROM despesas
           GROUP BY despesas.id_veiculo
         )
  SELECT v.id_veiculo,
@@ -1068,21 +1068,21 @@ CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_veiculos AS
     COALESCE(ab.qtd, (0)::bigint) AS qtd_abastecimentos,
     COALESCE(ma.qtd, (0)::bigint) AS qtd_manutencoes,
     COALESCE(de.qtd, (0)::bigint) AS qtd_despesas
-   FROM (((gabriel_trabalho_bd.veiculos v
+   FROM (((veiculos v
      LEFT JOIN ab ON ((ab.id_veiculo = v.id_veiculo)))
      LEFT JOIN ma ON ((ma.id_veiculo = v.id_veiculo)))
      LEFT JOIN de ON ((de.id_veiculo = v.id_veiculo)))
   WITH NO DATA;
 
 
-ALTER MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_veiculos OWNER TO neondb_owner;
+ALTER MATERIALIZED VIEW mv_gastos_veiculos OWNER TO neondb_owner;
 
 --
 -- TOC entry 246 (class 1259 OID 73783)
 -- Name: mv_manutencoes_por_tipo; Type: MATERIALIZED VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_manutencoes_por_tipo AS
+CREATE MATERIALIZED VIEW mv_manutencoes_por_tipo AS
  SELECT m.id_veiculo,
     v.placa,
     v.modelo,
@@ -1092,20 +1092,20 @@ CREATE MATERIALIZED VIEW gabriel_trabalho_bd.mv_manutencoes_por_tipo AS
     round(avg(m.valor), 2) AS valor_medio,
     max(m.data_manutencao) AS ultima_manutencao,
     max(m.quilometragem) AS ultimo_km
-   FROM (gabriel_trabalho_bd.manutencoes m
-     JOIN gabriel_trabalho_bd.veiculos v ON ((v.id_veiculo = m.id_veiculo)))
+   FROM (manutencoes m
+     JOIN veiculos v ON ((v.id_veiculo = m.id_veiculo)))
   GROUP BY m.id_veiculo, v.placa, v.modelo, m.tipo_manutencao
   WITH NO DATA;
 
 
-ALTER MATERIALIZED VIEW gabriel_trabalho_bd.mv_manutencoes_por_tipo OWNER TO neondb_owner;
+ALTER MATERIALIZED VIEW mv_manutencoes_por_tipo OWNER TO neondb_owner;
 
 --
 -- TOC entry 221 (class 1259 OID 32768)
 -- Name: veiculos_id_veiculo_seq; Type: SEQUENCE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE SEQUENCE gabriel_trabalho_bd.veiculos_id_veiculo_seq
+CREATE SEQUENCE veiculos_id_veiculo_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1114,7 +1114,7 @@ CREATE SEQUENCE gabriel_trabalho_bd.veiculos_id_veiculo_seq
     CACHE 1;
 
 
-ALTER SEQUENCE gabriel_trabalho_bd.veiculos_id_veiculo_seq OWNER TO neondb_owner;
+ALTER SEQUENCE veiculos_id_veiculo_seq OWNER TO neondb_owner;
 
 --
 -- TOC entry 3686 (class 0 OID 0)
@@ -1122,7 +1122,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.veiculos_id_veiculo_seq OWNER TO neondb_owner
 -- Name: veiculos_id_veiculo_seq; Type: SEQUENCE OWNED BY; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER SEQUENCE gabriel_trabalho_bd.veiculos_id_veiculo_seq OWNED BY gabriel_trabalho_bd.veiculos.id_veiculo;
+ALTER SEQUENCE veiculos_id_veiculo_seq OWNED BY veiculos.id_veiculo;
 
 
 --
@@ -1130,7 +1130,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.veiculos_id_veiculo_seq OWNED BY gabriel_trab
 -- Name: viagens_id_viagem_seq; Type: SEQUENCE; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE SEQUENCE gabriel_trabalho_bd.viagens_id_viagem_seq
+CREATE SEQUENCE viagens_id_viagem_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1139,7 +1139,7 @@ CREATE SEQUENCE gabriel_trabalho_bd.viagens_id_viagem_seq
     CACHE 1;
 
 
-ALTER SEQUENCE gabriel_trabalho_bd.viagens_id_viagem_seq OWNER TO neondb_owner;
+ALTER SEQUENCE viagens_id_viagem_seq OWNER TO neondb_owner;
 
 --
 -- TOC entry 3688 (class 0 OID 0)
@@ -1147,7 +1147,7 @@ ALTER SEQUENCE gabriel_trabalho_bd.viagens_id_viagem_seq OWNER TO neondb_owner;
 -- Name: viagens_id_viagem_seq; Type: SEQUENCE OWNED BY; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER SEQUENCE gabriel_trabalho_bd.viagens_id_viagem_seq OWNED BY gabriel_trabalho_bd.viagens.id_viagem;
+ALTER SEQUENCE viagens_id_viagem_seq OWNED BY viagens.id_viagem;
 
 
 --
@@ -1155,31 +1155,31 @@ ALTER SEQUENCE gabriel_trabalho_bd.viagens_id_viagem_seq OWNED BY gabriel_trabal
 -- Name: vw_gastos_veiculos; Type: VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE VIEW gabriel_trabalho_bd.vw_gastos_veiculos AS
+CREATE VIEW vw_gastos_veiculos AS
  SELECT id_veiculo,
     placa,
     marca,
     modelo,
     COALESCE(( SELECT sum(a.valor_total) AS sum
-           FROM gabriel_trabalho_bd.abastecimentos a
+           FROM abastecimentos a
           WHERE (a.id_veiculo = v.id_veiculo)), (0)::numeric) AS gastos_abastecimento,
     COALESCE(( SELECT sum(m.valor) AS sum
-           FROM gabriel_trabalho_bd.manutencoes m
+           FROM manutencoes m
           WHERE (m.id_veiculo = v.id_veiculo)), (0)::numeric) AS gastos_manutencao,
     COALESCE(( SELECT sum(d.valor) AS sum
-           FROM gabriel_trabalho_bd.despesas d
+           FROM despesas d
           WHERE (d.id_veiculo = v.id_veiculo)), (0)::numeric) AS gastos_despesas
-   FROM gabriel_trabalho_bd.veiculos v;
+   FROM veiculos v;
 
 
-ALTER VIEW gabriel_trabalho_bd.vw_gastos_veiculos OWNER TO neondb_owner;
+ALTER VIEW vw_gastos_veiculos OWNER TO neondb_owner;
 
 --
 -- TOC entry 237 (class 1259 OID 32921)
 -- Name: vw_historico_abastecimentos; Type: VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE VIEW gabriel_trabalho_bd.vw_historico_abastecimentos AS
+CREATE VIEW vw_historico_abastecimentos AS
  SELECT a.id_abastecimento,
     a.id_veiculo,
     v.placa,
@@ -1191,18 +1191,18 @@ CREATE VIEW gabriel_trabalho_bd.vw_historico_abastecimentos AS
     a.valor_litro,
     a.valor_total,
     a.quilometragem
-   FROM (gabriel_trabalho_bd.abastecimentos a
-     JOIN gabriel_trabalho_bd.veiculos v ON ((a.id_veiculo = v.id_veiculo)));
+   FROM (abastecimentos a
+     JOIN veiculos v ON ((a.id_veiculo = v.id_veiculo)));
 
 
-ALTER VIEW gabriel_trabalho_bd.vw_historico_abastecimentos OWNER TO neondb_owner;
+ALTER VIEW vw_historico_abastecimentos OWNER TO neondb_owner;
 
 --
 -- TOC entry 236 (class 1259 OID 32911)
 -- Name: vw_resumo_viagens; Type: VIEW; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE VIEW gabriel_trabalho_bd.vw_resumo_viagens AS
+CREATE VIEW vw_resumo_viagens AS
  SELECT vi.id_viagem,
     v.placa,
     v.modelo,
@@ -1214,12 +1214,12 @@ CREATE VIEW gabriel_trabalho_bd.vw_resumo_viagens AS
     vi.km_inicial,
     vi.km_final,
     COALESCE((vi.km_final - vi.km_inicial), 0) AS km_percorridos
-   FROM ((gabriel_trabalho_bd.viagens vi
-     JOIN gabriel_trabalho_bd.veiculos v ON ((vi.id_veiculo = v.id_veiculo)))
-     JOIN gabriel_trabalho_bd.motoristas m ON ((vi.id_motorista = m.id_motorista)));
+   FROM ((viagens vi
+     JOIN veiculos v ON ((vi.id_veiculo = v.id_veiculo)))
+     JOIN motoristas m ON ((vi.id_motorista = m.id_motorista)));
 
 
-ALTER VIEW gabriel_trabalho_bd.vw_resumo_viagens OWNER TO neondb_owner;
+ALTER VIEW vw_resumo_viagens OWNER TO neondb_owner;
 
 --
 -- TOC entry 239 (class 1259 OID 57384)
@@ -1265,7 +1265,7 @@ ALTER SEQUENCE public.migrations_id_seq OWNED BY public.migrations.id;
 -- Name: abastecimentos id_abastecimento; Type: DEFAULT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.abastecimentos ALTER COLUMN id_abastecimento SET DEFAULT nextval('gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq'::regclass);
+ALTER TABLE ONLY abastecimentos ALTER COLUMN id_abastecimento SET DEFAULT nextval('abastecimentos_id_abastecimento_seq'::regclass);
 
 
 --
@@ -1273,7 +1273,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.abastecimentos ALTER COLUMN id_abasteciment
 -- Name: despesas id_despesa; Type: DEFAULT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.despesas ALTER COLUMN id_despesa SET DEFAULT nextval('gabriel_trabalho_bd.despesas_id_despesa_seq'::regclass);
+ALTER TABLE ONLY despesas ALTER COLUMN id_despesa SET DEFAULT nextval('despesas_id_despesa_seq'::regclass);
 
 
 --
@@ -1281,7 +1281,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.despesas ALTER COLUMN id_despesa SET DEFAUL
 -- Name: historico_status_veiculo id_historico; Type: DEFAULT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.historico_status_veiculo ALTER COLUMN id_historico SET DEFAULT nextval('gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq'::regclass);
+ALTER TABLE ONLY historico_status_veiculo ALTER COLUMN id_historico SET DEFAULT nextval('historico_status_veiculo_id_historico_seq'::regclass);
 
 
 --
@@ -1289,7 +1289,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.historico_status_veiculo ALTER COLUMN id_hi
 -- Name: hodometros id_hodometro; Type: DEFAULT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.hodometros ALTER COLUMN id_hodometro SET DEFAULT nextval('gabriel_trabalho_bd.hodometros_id_hodometro_seq'::regclass);
+ALTER TABLE ONLY hodometros ALTER COLUMN id_hodometro SET DEFAULT nextval('hodometros_id_hodometro_seq'::regclass);
 
 
 --
@@ -1297,7 +1297,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.hodometros ALTER COLUMN id_hodometro SET DE
 -- Name: manutencoes id_manutencao; Type: DEFAULT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.manutencoes ALTER COLUMN id_manutencao SET DEFAULT nextval('gabriel_trabalho_bd.manutencoes_id_manutencao_seq'::regclass);
+ALTER TABLE ONLY manutencoes ALTER COLUMN id_manutencao SET DEFAULT nextval('manutencoes_id_manutencao_seq'::regclass);
 
 
 --
@@ -1305,7 +1305,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.manutencoes ALTER COLUMN id_manutencao SET 
 -- Name: motoristas id_motorista; Type: DEFAULT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.motoristas ALTER COLUMN id_motorista SET DEFAULT nextval('gabriel_trabalho_bd.motoristas_id_motorista_seq'::regclass);
+ALTER TABLE ONLY motoristas ALTER COLUMN id_motorista SET DEFAULT nextval('motoristas_id_motorista_seq'::regclass);
 
 
 --
@@ -1313,7 +1313,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.motoristas ALTER COLUMN id_motorista SET DE
 -- Name: veiculos id_veiculo; Type: DEFAULT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.veiculos ALTER COLUMN id_veiculo SET DEFAULT nextval('gabriel_trabalho_bd.veiculos_id_veiculo_seq'::regclass);
+ALTER TABLE ONLY veiculos ALTER COLUMN id_veiculo SET DEFAULT nextval('veiculos_id_veiculo_seq'::regclass);
 
 
 --
@@ -1321,7 +1321,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.veiculos ALTER COLUMN id_veiculo SET DEFAUL
 -- Name: viagens id_viagem; Type: DEFAULT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.viagens ALTER COLUMN id_viagem SET DEFAULT nextval('gabriel_trabalho_bd.viagens_id_viagem_seq'::regclass);
+ALTER TABLE ONLY viagens ALTER COLUMN id_viagem SET DEFAULT nextval('viagens_id_viagem_seq'::regclass);
 
 
 --
@@ -1338,7 +1338,7 @@ ALTER TABLE ONLY public.migrations ALTER COLUMN id SET DEFAULT nextval('public.m
 -- Data for Name: abastecimentos; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.abastecimentos (id_abastecimento, id_veiculo, data_abastecimento, tipo_combustivel, litros, valor_litro, valor_total, quilometragem) FROM stdin;
+COPY abastecimentos (id_abastecimento, id_veiculo, data_abastecimento, tipo_combustivel, litros, valor_litro, valor_total, quilometragem) FROM stdin;
 1	1	2026-01-10	gasolina	42.50	5.89	250.33	45500
 2	1	2026-02-12	gasolina	45.20	5.95	268.94	47080
 3	1	2026-03-14	gasolina	43.80	6.02	263.68	48700
@@ -4099,7 +4099,7 @@ COPY gabriel_trabalho_bd.abastecimentos (id_abastecimento, id_veiculo, data_abas
 -- Data for Name: despesas; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.despesas (id_despesa, id_veiculo, data_despesa, tipo_despesa, descricao, valor) FROM stdin;
+COPY despesas (id_despesa, id_veiculo, data_despesa, tipo_despesa, descricao, valor) FROM stdin;
 1	1	2026-01-12	pedagio	pedagio em viagem regional	45.50
 2	1	2026-02-14	lavagem	lavagem completa	80.00
 3	1	2026-03-16	pedagio	pedagio em viagem regional	52.00
@@ -5136,7 +5136,7 @@ COPY gabriel_trabalho_bd.despesas (id_despesa, id_veiculo, data_despesa, tipo_de
 -- Data for Name: historico_status_veiculo; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.historico_status_veiculo (id_historico, id_veiculo, status_anterior, status_novo, data_alteracao) FROM stdin;
+COPY historico_status_veiculo (id_historico, id_veiculo, status_anterior, status_novo, data_alteracao) FROM stdin;
 5	11	ativo	em_viagem	2026-10-29 23:10:51.451432
 6	31	ativo	em_manutencao	2026-11-03 12:54:44.375243
 7	36	ativo	em_manutencao	2026-11-03 12:54:44.375243
@@ -5445,7 +5445,7 @@ COPY gabriel_trabalho_bd.historico_status_veiculo (id_historico, id_veiculo, sta
 -- Data for Name: hodometros; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.hodometros (id_hodometro, id_veiculo, data_registro, quilometragem, observacao) FROM stdin;
+COPY hodometros (id_hodometro, id_veiculo, data_registro, quilometragem, observacao) FROM stdin;
 1	1	2026-01-05	45200	registro mensal
 2	1	2026-02-05	46850	registro mensal
 3	1	2026-03-05	48520	registro mensal
@@ -7402,7 +7402,7 @@ COPY gabriel_trabalho_bd.hodometros (id_hodometro, id_veiculo, data_registro, qu
 -- Data for Name: manutencoes; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.manutencoes (id_manutencao, id_veiculo, data_manutencao, tipo_manutencao, descricao, oficina, valor, quilometragem) FROM stdin;
+COPY manutencoes (id_manutencao, id_veiculo, data_manutencao, tipo_manutencao, descricao, oficina, valor, quilometragem) FROM stdin;
 1	1	2026-01-20	preventiva	troca de oleo e filtros	oficina central	380.00	45800
 2	1	2026-04-22	preventiva	revisao dos freios	oficina central	620.00	50600
 3	2	2026-02-18	preventiva	troca de oleo e filtro de ar	auto center sul	410.00	40200
@@ -8272,7 +8272,7 @@ COPY gabriel_trabalho_bd.manutencoes (id_manutencao, id_veiculo, data_manutencao
 -- Data for Name: modalidade; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.modalidade (id, nome, descricao) FROM stdin;
+COPY modalidade (id, nome, descricao) FROM stdin;
 4abd4707-52fb-4526-9c5a-e9108ac6d51d	Transporte de carga	Deslocamento de mercadorias entre unidades e clientes
 5dcc2749-47ee-41f5-bf52-d7a2d20fbe6d	Transporte de passageiros	Deslocamento de funcionários e visitantes
 6e149b4f-121c-40a5-a58d-eb7758f89d69	Entrega urbana	Entregas curtas dentro da cidade
@@ -8288,7 +8288,7 @@ bb831427-e8e1-4a27-804b-656f26b2d50f	Manutenção externa	Deslocamento até ofic
 -- Data for Name: motoristas; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.motoristas (id_motorista, nome, cnh, categoria_cnh, telefone, data_admissao, status, validade_cnh) FROM stdin;
+COPY motoristas (id_motorista, nome, cnh, categoria_cnh, telefone, data_admissao, status, validade_cnh) FROM stdin;
 1	joao da silva	12345678901	d	42999910001	2021-02-10	ativo	2027-07-08
 2	carlos eduardo	23456789012	d	42999910002	2020-06-15	ativo	2027-08-14
 3	marcos antonio	34567890123	e	42999910003	2019-03-20	ativo	2027-09-20
@@ -8448,7 +8448,7 @@ COPY gabriel_trabalho_bd.motoristas (id_motorista, nome, cnh, categoria_cnh, tel
 -- Data for Name: veiculos; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.veiculos (id_veiculo, placa, marca, modelo, ano, tipo, capacidade, status, quilometragem_atual) FROM stdin;
+COPY veiculos (id_veiculo, placa, marca, modelo, ano, tipo, capacidade, status, quilometragem_atual) FROM stdin;
 151	QZ061A1	Fiat	Strada	2021	Utilitario	7347.25	ativo	216293
 188	QZ098A8	Iveco	Daily	2025	Caminhao	7818.13	em_manutencao	53828
 164	QZ074A4	Ford	Ranger	2023	Caminhonete	693.42	inativo	266092
@@ -8648,7 +8648,7 @@ COPY gabriel_trabalho_bd.veiculos (id_veiculo, placa, marca, modelo, ano, tipo, 
 -- Data for Name: viagens; Type: TABLE DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-COPY gabriel_trabalho_bd.viagens (id_viagem, id_veiculo, id_motorista, data_saida, data_retorno, km_inicial, km_final, destino, finalidade, id_modalidade) FROM stdin;
+COPY viagens (id_viagem, id_veiculo, id_motorista, data_saida, data_retorno, km_inicial, km_final, destino, finalidade, id_modalidade) FROM stdin;
 1	1	1	2026-01-08 07:30:00	2026-01-08 17:20:00	45300	45680	guarapuava	entrega de materiais	\N
 2	1	2	2026-02-10 06:50:00	2026-02-10 18:10:00	46800	47250	ponta grossa	entrega de mercadorias	\N
 3	1	3	2026-03-12 08:00:00	2026-03-12 16:30:00	48500	48820	prudentopolis	transporte de materiais	\N
@@ -9953,7 +9953,7 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 -- Name: abastecimentos_id_abastecimento_seq; Type: SEQUENCE SET; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-SELECT pg_catalog.setval('gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq', 2751, true);
+SELECT pg_catalog.setval('abastecimentos_id_abastecimento_seq', 2751, true);
 
 
 --
@@ -9962,7 +9962,7 @@ SELECT pg_catalog.setval('gabriel_trabalho_bd.abastecimentos_id_abastecimento_se
 -- Name: despesas_id_despesa_seq; Type: SEQUENCE SET; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-SELECT pg_catalog.setval('gabriel_trabalho_bd.despesas_id_despesa_seq', 1027, true);
+SELECT pg_catalog.setval('despesas_id_despesa_seq', 1027, true);
 
 
 --
@@ -9971,7 +9971,7 @@ SELECT pg_catalog.setval('gabriel_trabalho_bd.despesas_id_despesa_seq', 1027, tr
 -- Name: historico_status_veiculo_id_historico_seq; Type: SEQUENCE SET; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-SELECT pg_catalog.setval('gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq', 303, true);
+SELECT pg_catalog.setval('historico_status_veiculo_id_historico_seq', 303, true);
 
 
 --
@@ -9980,7 +9980,7 @@ SELECT pg_catalog.setval('gabriel_trabalho_bd.historico_status_veiculo_id_histor
 -- Name: hodometros_id_hodometro_seq; Type: SEQUENCE SET; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-SELECT pg_catalog.setval('gabriel_trabalho_bd.hodometros_id_hodometro_seq', 1947, true);
+SELECT pg_catalog.setval('hodometros_id_hodometro_seq', 1947, true);
 
 
 --
@@ -9989,7 +9989,7 @@ SELECT pg_catalog.setval('gabriel_trabalho_bd.hodometros_id_hodometro_seq', 1947
 -- Name: manutencoes_id_manutencao_seq; Type: SEQUENCE SET; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-SELECT pg_catalog.setval('gabriel_trabalho_bd.manutencoes_id_manutencao_seq', 860, true);
+SELECT pg_catalog.setval('manutencoes_id_manutencao_seq', 860, true);
 
 
 --
@@ -9998,7 +9998,7 @@ SELECT pg_catalog.setval('gabriel_trabalho_bd.manutencoes_id_manutencao_seq', 86
 -- Name: motoristas_id_motorista_seq; Type: SEQUENCE SET; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-SELECT pg_catalog.setval('gabriel_trabalho_bd.motoristas_id_motorista_seq', 150, true);
+SELECT pg_catalog.setval('motoristas_id_motorista_seq', 150, true);
 
 
 --
@@ -10007,7 +10007,7 @@ SELECT pg_catalog.setval('gabriel_trabalho_bd.motoristas_id_motorista_seq', 150,
 -- Name: veiculos_id_veiculo_seq; Type: SEQUENCE SET; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-SELECT pg_catalog.setval('gabriel_trabalho_bd.veiculos_id_veiculo_seq', 190, true);
+SELECT pg_catalog.setval('veiculos_id_veiculo_seq', 190, true);
 
 
 --
@@ -10016,7 +10016,7 @@ SELECT pg_catalog.setval('gabriel_trabalho_bd.veiculos_id_veiculo_seq', 190, tru
 -- Name: viagens_id_viagem_seq; Type: SEQUENCE SET; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-SELECT pg_catalog.setval('gabriel_trabalho_bd.viagens_id_viagem_seq', 1285, true);
+SELECT pg_catalog.setval('viagens_id_viagem_seq', 1285, true);
 
 
 --
@@ -10033,7 +10033,7 @@ SELECT pg_catalog.setval('public.migrations_id_seq', 1, false);
 -- Name: abastecimentos abastecimentos_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.abastecimentos
+ALTER TABLE ONLY abastecimentos
     ADD CONSTRAINT abastecimentos_pkey PRIMARY KEY (id_abastecimento);
 
 
@@ -10042,7 +10042,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.abastecimentos
 -- Name: despesas despesas_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.despesas
+ALTER TABLE ONLY despesas
     ADD CONSTRAINT despesas_pkey PRIMARY KEY (id_despesa);
 
 
@@ -10051,7 +10051,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.despesas
 -- Name: historico_status_veiculo historico_status_veiculo_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.historico_status_veiculo
+ALTER TABLE ONLY historico_status_veiculo
     ADD CONSTRAINT historico_status_veiculo_pkey PRIMARY KEY (id_historico);
 
 
@@ -10060,7 +10060,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.historico_status_veiculo
 -- Name: hodometros hodometros_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.hodometros
+ALTER TABLE ONLY hodometros
     ADD CONSTRAINT hodometros_pkey PRIMARY KEY (id_hodometro);
 
 
@@ -10069,7 +10069,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.hodometros
 -- Name: manutencoes manutencoes_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.manutencoes
+ALTER TABLE ONLY manutencoes
     ADD CONSTRAINT manutencoes_pkey PRIMARY KEY (id_manutencao);
 
 
@@ -10078,7 +10078,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.manutencoes
 -- Name: modalidade modalidade_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.modalidade
+ALTER TABLE ONLY modalidade
     ADD CONSTRAINT modalidade_pkey PRIMARY KEY (id);
 
 
@@ -10087,7 +10087,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.modalidade
 -- Name: motoristas motoristas_cnh_key; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.motoristas
+ALTER TABLE ONLY motoristas
     ADD CONSTRAINT motoristas_cnh_key UNIQUE (cnh);
 
 
@@ -10096,7 +10096,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.motoristas
 -- Name: motoristas motoristas_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.motoristas
+ALTER TABLE ONLY motoristas
     ADD CONSTRAINT motoristas_pkey PRIMARY KEY (id_motorista);
 
 
@@ -10105,7 +10105,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.motoristas
 -- Name: veiculos veiculos_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.veiculos
+ALTER TABLE ONLY veiculos
     ADD CONSTRAINT veiculos_pkey PRIMARY KEY (id_veiculo);
 
 
@@ -10114,7 +10114,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.veiculos
 -- Name: veiculos veiculos_placa_key; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.veiculos
+ALTER TABLE ONLY veiculos
     ADD CONSTRAINT veiculos_placa_key UNIQUE (placa);
 
 
@@ -10123,7 +10123,7 @@ ALTER TABLE ONLY gabriel_trabalho_bd.veiculos
 -- Name: viagens viagens_pkey; Type: CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.viagens
+ALTER TABLE ONLY viagens
     ADD CONSTRAINT viagens_pkey PRIMARY KEY (id_viagem);
 
 
@@ -10141,7 +10141,7 @@ ALTER TABLE ONLY public.migrations
 -- Name: idx_abastecimentos_id_veiculo; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_abastecimentos_id_veiculo ON gabriel_trabalho_bd.abastecimentos USING btree (id_veiculo);
+CREATE INDEX idx_abastecimentos_id_veiculo ON abastecimentos USING btree (id_veiculo);
 
 
 --
@@ -10149,7 +10149,7 @@ CREATE INDEX idx_abastecimentos_id_veiculo ON gabriel_trabalho_bd.abastecimentos
 -- Name: idx_abastecimentos_veiculo_data; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_abastecimentos_veiculo_data ON gabriel_trabalho_bd.abastecimentos USING btree (id_veiculo, data_abastecimento DESC);
+CREATE INDEX idx_abastecimentos_veiculo_data ON abastecimentos USING btree (id_veiculo, data_abastecimento DESC);
 
 
 --
@@ -10157,7 +10157,7 @@ CREATE INDEX idx_abastecimentos_veiculo_data ON gabriel_trabalho_bd.abasteciment
 -- Name: idx_despesas_id_veiculo; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_despesas_id_veiculo ON gabriel_trabalho_bd.despesas USING btree (id_veiculo);
+CREATE INDEX idx_despesas_id_veiculo ON despesas USING btree (id_veiculo);
 
 
 --
@@ -10165,7 +10165,7 @@ CREATE INDEX idx_despesas_id_veiculo ON gabriel_trabalho_bd.despesas USING btree
 -- Name: idx_historico_status_id_veiculo; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_historico_status_id_veiculo ON gabriel_trabalho_bd.historico_status_veiculo USING btree (id_veiculo);
+CREATE INDEX idx_historico_status_id_veiculo ON historico_status_veiculo USING btree (id_veiculo);
 
 
 --
@@ -10173,7 +10173,7 @@ CREATE INDEX idx_historico_status_id_veiculo ON gabriel_trabalho_bd.historico_st
 -- Name: idx_hodometros_id_veiculo; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_hodometros_id_veiculo ON gabriel_trabalho_bd.hodometros USING btree (id_veiculo);
+CREATE INDEX idx_hodometros_id_veiculo ON hodometros USING btree (id_veiculo);
 
 
 --
@@ -10181,7 +10181,7 @@ CREATE INDEX idx_hodometros_id_veiculo ON gabriel_trabalho_bd.hodometros USING b
 -- Name: idx_manutencoes_id_veiculo; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_manutencoes_id_veiculo ON gabriel_trabalho_bd.manutencoes USING btree (id_veiculo);
+CREATE INDEX idx_manutencoes_id_veiculo ON manutencoes USING btree (id_veiculo);
 
 
 --
@@ -10189,7 +10189,7 @@ CREATE INDEX idx_manutencoes_id_veiculo ON gabriel_trabalho_bd.manutencoes USING
 -- Name: idx_manutencoes_veiculo_data; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_manutencoes_veiculo_data ON gabriel_trabalho_bd.manutencoes USING btree (id_veiculo, data_manutencao DESC);
+CREATE INDEX idx_manutencoes_veiculo_data ON manutencoes USING btree (id_veiculo, data_manutencao DESC);
 
 
 --
@@ -10197,7 +10197,7 @@ CREATE INDEX idx_manutencoes_veiculo_data ON gabriel_trabalho_bd.manutencoes USI
 -- Name: idx_motoristas_status; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_motoristas_status ON gabriel_trabalho_bd.motoristas USING btree (status);
+CREATE INDEX idx_motoristas_status ON motoristas USING btree (status);
 
 
 --
@@ -10205,7 +10205,7 @@ CREATE INDEX idx_motoristas_status ON gabriel_trabalho_bd.motoristas USING btree
 -- Name: idx_mv_desempenho_motoristas_cnh; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_mv_desempenho_motoristas_cnh ON gabriel_trabalho_bd.mv_desempenho_motoristas USING btree (situacao_cnh);
+CREATE INDEX idx_mv_desempenho_motoristas_cnh ON mv_desempenho_motoristas USING btree (situacao_cnh);
 
 
 --
@@ -10213,7 +10213,7 @@ CREATE INDEX idx_mv_desempenho_motoristas_cnh ON gabriel_trabalho_bd.mv_desempen
 -- Name: idx_mv_gastos_mensais_mes; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_mv_gastos_mensais_mes ON gabriel_trabalho_bd.mv_gastos_mensais USING btree (mes);
+CREATE INDEX idx_mv_gastos_mensais_mes ON mv_gastos_mensais USING btree (mes);
 
 
 --
@@ -10221,7 +10221,7 @@ CREATE INDEX idx_mv_gastos_mensais_mes ON gabriel_trabalho_bd.mv_gastos_mensais 
 -- Name: idx_mv_gastos_veiculos_total; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_mv_gastos_veiculos_total ON gabriel_trabalho_bd.mv_gastos_veiculos USING btree (gasto_total DESC);
+CREATE INDEX idx_mv_gastos_veiculos_total ON mv_gastos_veiculos USING btree (gasto_total DESC);
 
 
 --
@@ -10229,7 +10229,7 @@ CREATE INDEX idx_mv_gastos_veiculos_total ON gabriel_trabalho_bd.mv_gastos_veicu
 -- Name: idx_veiculos_status; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_veiculos_status ON gabriel_trabalho_bd.veiculos USING btree (status);
+CREATE INDEX idx_veiculos_status ON veiculos USING btree (status);
 
 
 --
@@ -10237,7 +10237,7 @@ CREATE INDEX idx_veiculos_status ON gabriel_trabalho_bd.veiculos USING btree (st
 -- Name: idx_viagens_em_andamento; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE UNIQUE INDEX idx_viagens_em_andamento ON gabriel_trabalho_bd.viagens USING btree (id_veiculo) WHERE (data_retorno IS NULL);
+CREATE UNIQUE INDEX idx_viagens_em_andamento ON viagens USING btree (id_veiculo) WHERE (data_retorno IS NULL);
 
 
 --
@@ -10245,7 +10245,7 @@ CREATE UNIQUE INDEX idx_viagens_em_andamento ON gabriel_trabalho_bd.viagens USIN
 -- Name: idx_viagens_id_modalidade; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_viagens_id_modalidade ON gabriel_trabalho_bd.viagens USING btree (id_modalidade);
+CREATE INDEX idx_viagens_id_modalidade ON viagens USING btree (id_modalidade);
 
 
 --
@@ -10253,7 +10253,7 @@ CREATE INDEX idx_viagens_id_modalidade ON gabriel_trabalho_bd.viagens USING btre
 -- Name: idx_viagens_id_motorista; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_viagens_id_motorista ON gabriel_trabalho_bd.viagens USING btree (id_motorista);
+CREATE INDEX idx_viagens_id_motorista ON viagens USING btree (id_motorista);
 
 
 --
@@ -10261,7 +10261,7 @@ CREATE INDEX idx_viagens_id_motorista ON gabriel_trabalho_bd.viagens USING btree
 -- Name: idx_viagens_id_veiculo; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE INDEX idx_viagens_id_veiculo ON gabriel_trabalho_bd.viagens USING btree (id_veiculo);
+CREATE INDEX idx_viagens_id_veiculo ON viagens USING btree (id_veiculo);
 
 
 --
@@ -10269,7 +10269,7 @@ CREATE INDEX idx_viagens_id_veiculo ON gabriel_trabalho_bd.viagens USING btree (
 -- Name: uq_mv_consumo_veiculos; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE UNIQUE INDEX uq_mv_consumo_veiculos ON gabriel_trabalho_bd.mv_consumo_veiculos USING btree (id_veiculo);
+CREATE UNIQUE INDEX uq_mv_consumo_veiculos ON mv_consumo_veiculos USING btree (id_veiculo);
 
 
 --
@@ -10277,7 +10277,7 @@ CREATE UNIQUE INDEX uq_mv_consumo_veiculos ON gabriel_trabalho_bd.mv_consumo_vei
 -- Name: uq_mv_dashboard_frota; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE UNIQUE INDEX uq_mv_dashboard_frota ON gabriel_trabalho_bd.mv_dashboard_frota USING btree (id);
+CREATE UNIQUE INDEX uq_mv_dashboard_frota ON mv_dashboard_frota USING btree (id);
 
 
 --
@@ -10285,7 +10285,7 @@ CREATE UNIQUE INDEX uq_mv_dashboard_frota ON gabriel_trabalho_bd.mv_dashboard_fr
 -- Name: uq_mv_desempenho_motoristas; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE UNIQUE INDEX uq_mv_desempenho_motoristas ON gabriel_trabalho_bd.mv_desempenho_motoristas USING btree (id_motorista);
+CREATE UNIQUE INDEX uq_mv_desempenho_motoristas ON mv_desempenho_motoristas USING btree (id_motorista);
 
 
 --
@@ -10293,7 +10293,7 @@ CREATE UNIQUE INDEX uq_mv_desempenho_motoristas ON gabriel_trabalho_bd.mv_desemp
 -- Name: uq_mv_gastos_mensais; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE UNIQUE INDEX uq_mv_gastos_mensais ON gabriel_trabalho_bd.mv_gastos_mensais USING btree (id_veiculo, mes, categoria);
+CREATE UNIQUE INDEX uq_mv_gastos_mensais ON mv_gastos_mensais USING btree (id_veiculo, mes, categoria);
 
 
 --
@@ -10301,7 +10301,7 @@ CREATE UNIQUE INDEX uq_mv_gastos_mensais ON gabriel_trabalho_bd.mv_gastos_mensai
 -- Name: uq_mv_gastos_veiculos; Type: INDEX; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE UNIQUE INDEX uq_mv_gastos_veiculos ON gabriel_trabalho_bd.mv_gastos_veiculos USING btree (id_veiculo);
+CREATE UNIQUE INDEX uq_mv_gastos_veiculos ON mv_gastos_veiculos USING btree (id_veiculo);
 
 
 --
@@ -10309,7 +10309,7 @@ CREATE UNIQUE INDEX uq_mv_gastos_veiculos ON gabriel_trabalho_bd.mv_gastos_veicu
 -- Name: abastecimentos trg_abastecimento_valida; Type: TRIGGER; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TRIGGER trg_abastecimento_valida BEFORE INSERT OR UPDATE ON gabriel_trabalho_bd.abastecimentos FOR EACH ROW EXECUTE FUNCTION gabriel_trabalho_bd.tg_fn_abastecimento_valida();
+CREATE TRIGGER trg_abastecimento_valida BEFORE INSERT OR UPDATE ON abastecimentos FOR EACH ROW EXECUTE FUNCTION tg_fn_abastecimento_valida();
 
 
 --
@@ -10317,7 +10317,7 @@ CREATE TRIGGER trg_abastecimento_valida BEFORE INSERT OR UPDATE ON gabriel_traba
 -- Name: abastecimentos trg_km_abastecimentos; Type: TRIGGER; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TRIGGER trg_km_abastecimentos AFTER INSERT ON gabriel_trabalho_bd.abastecimentos FOR EACH ROW EXECUTE FUNCTION gabriel_trabalho_bd.tg_fn_atualiza_km_veiculo();
+CREATE TRIGGER trg_km_abastecimentos AFTER INSERT ON abastecimentos FOR EACH ROW EXECUTE FUNCTION tg_fn_atualiza_km_veiculo();
 
 
 --
@@ -10325,7 +10325,7 @@ CREATE TRIGGER trg_km_abastecimentos AFTER INSERT ON gabriel_trabalho_bd.abastec
 -- Name: hodometros trg_km_hodometros; Type: TRIGGER; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TRIGGER trg_km_hodometros AFTER INSERT ON gabriel_trabalho_bd.hodometros FOR EACH ROW EXECUTE FUNCTION gabriel_trabalho_bd.tg_fn_atualiza_km_veiculo();
+CREATE TRIGGER trg_km_hodometros AFTER INSERT ON hodometros FOR EACH ROW EXECUTE FUNCTION tg_fn_atualiza_km_veiculo();
 
 
 --
@@ -10333,7 +10333,7 @@ CREATE TRIGGER trg_km_hodometros AFTER INSERT ON gabriel_trabalho_bd.hodometros 
 -- Name: manutencoes trg_km_manutencoes; Type: TRIGGER; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TRIGGER trg_km_manutencoes AFTER INSERT ON gabriel_trabalho_bd.manutencoes FOR EACH ROW EXECUTE FUNCTION gabriel_trabalho_bd.tg_fn_atualiza_km_veiculo();
+CREATE TRIGGER trg_km_manutencoes AFTER INSERT ON manutencoes FOR EACH ROW EXECUTE FUNCTION tg_fn_atualiza_km_veiculo();
 
 
 --
@@ -10341,7 +10341,7 @@ CREATE TRIGGER trg_km_manutencoes AFTER INSERT ON gabriel_trabalho_bd.manutencoe
 -- Name: veiculos trg_veiculo_historico_status; Type: TRIGGER; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TRIGGER trg_veiculo_historico_status AFTER UPDATE OF status ON gabriel_trabalho_bd.veiculos FOR EACH ROW WHEN (((old.status)::text IS DISTINCT FROM (new.status)::text)) EXECUTE FUNCTION gabriel_trabalho_bd.tg_fn_veiculo_historico_status();
+CREATE TRIGGER trg_veiculo_historico_status AFTER UPDATE OF status ON veiculos FOR EACH ROW WHEN (((old.status)::text IS DISTINCT FROM (new.status)::text)) EXECUTE FUNCTION tg_fn_veiculo_historico_status();
 
 
 --
@@ -10349,7 +10349,7 @@ CREATE TRIGGER trg_veiculo_historico_status AFTER UPDATE OF status ON gabriel_tr
 -- Name: viagens trg_viagem_valida; Type: TRIGGER; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-CREATE TRIGGER trg_viagem_valida BEFORE INSERT ON gabriel_trabalho_bd.viagens FOR EACH ROW EXECUTE FUNCTION gabriel_trabalho_bd.tg_fn_viagem_valida();
+CREATE TRIGGER trg_viagem_valida BEFORE INSERT ON viagens FOR EACH ROW EXECUTE FUNCTION tg_fn_viagem_valida();
 
 
 --
@@ -10357,8 +10357,8 @@ CREATE TRIGGER trg_viagem_valida BEFORE INSERT ON gabriel_trabalho_bd.viagens FO
 -- Name: abastecimentos abastecimentos_id_veiculo_fkey; Type: FK CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.abastecimentos
-    ADD CONSTRAINT abastecimentos_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES gabriel_trabalho_bd.veiculos(id_veiculo);
+ALTER TABLE ONLY abastecimentos
+    ADD CONSTRAINT abastecimentos_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo);
 
 
 --
@@ -10366,8 +10366,8 @@ ALTER TABLE ONLY gabriel_trabalho_bd.abastecimentos
 -- Name: despesas despesas_id_veiculo_fkey; Type: FK CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.despesas
-    ADD CONSTRAINT despesas_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES gabriel_trabalho_bd.veiculos(id_veiculo);
+ALTER TABLE ONLY despesas
+    ADD CONSTRAINT despesas_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo);
 
 
 --
@@ -10375,8 +10375,8 @@ ALTER TABLE ONLY gabriel_trabalho_bd.despesas
 -- Name: historico_status_veiculo historico_status_veiculo_id_veiculo_fkey; Type: FK CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.historico_status_veiculo
-    ADD CONSTRAINT historico_status_veiculo_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES gabriel_trabalho_bd.veiculos(id_veiculo);
+ALTER TABLE ONLY historico_status_veiculo
+    ADD CONSTRAINT historico_status_veiculo_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo);
 
 
 --
@@ -10384,8 +10384,8 @@ ALTER TABLE ONLY gabriel_trabalho_bd.historico_status_veiculo
 -- Name: hodometros hodometros_id_veiculo_fkey; Type: FK CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.hodometros
-    ADD CONSTRAINT hodometros_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES gabriel_trabalho_bd.veiculos(id_veiculo);
+ALTER TABLE ONLY hodometros
+    ADD CONSTRAINT hodometros_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo);
 
 
 --
@@ -10393,8 +10393,8 @@ ALTER TABLE ONLY gabriel_trabalho_bd.hodometros
 -- Name: manutencoes manutencoes_id_veiculo_fkey; Type: FK CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.manutencoes
-    ADD CONSTRAINT manutencoes_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES gabriel_trabalho_bd.veiculos(id_veiculo);
+ALTER TABLE ONLY manutencoes
+    ADD CONSTRAINT manutencoes_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo);
 
 
 --
@@ -10402,8 +10402,8 @@ ALTER TABLE ONLY gabriel_trabalho_bd.manutencoes
 -- Name: viagens viagens_id_modalidade_fkey; Type: FK CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.viagens
-    ADD CONSTRAINT viagens_id_modalidade_fkey FOREIGN KEY (id_modalidade) REFERENCES gabriel_trabalho_bd.modalidade(id);
+ALTER TABLE ONLY viagens
+    ADD CONSTRAINT viagens_id_modalidade_fkey FOREIGN KEY (id_modalidade) REFERENCES modalidade(id);
 
 
 --
@@ -10411,8 +10411,8 @@ ALTER TABLE ONLY gabriel_trabalho_bd.viagens
 -- Name: viagens viagens_id_motorista_fkey; Type: FK CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.viagens
-    ADD CONSTRAINT viagens_id_motorista_fkey FOREIGN KEY (id_motorista) REFERENCES gabriel_trabalho_bd.motoristas(id_motorista);
+ALTER TABLE ONLY viagens
+    ADD CONSTRAINT viagens_id_motorista_fkey FOREIGN KEY (id_motorista) REFERENCES motoristas(id_motorista);
 
 
 --
@@ -10420,8 +10420,8 @@ ALTER TABLE ONLY gabriel_trabalho_bd.viagens
 -- Name: viagens viagens_id_veiculo_fkey; Type: FK CONSTRAINT; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-ALTER TABLE ONLY gabriel_trabalho_bd.viagens
-    ADD CONSTRAINT viagens_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES gabriel_trabalho_bd.veiculos(id_veiculo);
+ALTER TABLE ONLY viagens
+    ADD CONSTRAINT viagens_id_veiculo_fkey FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo);
 
 
 --
@@ -10448,7 +10448,7 @@ GRANT ALL ON SCHEMA public TO professor_bd;
 -- Name: FUNCTION fn_consumo_medio(p_id_veiculo integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_consumo_medio(p_id_veiculo integer) TO professor_bd;
+GRANT ALL ON FUNCTION fn_consumo_medio(p_id_veiculo integer) TO professor_bd;
 
 
 --
@@ -10457,7 +10457,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_consumo_medio(p_id_veiculo integer)
 -- Name: FUNCTION fn_custo_total_veiculo(p_id_veiculo integer, p_data_inicio date, p_data_fim date); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_custo_total_veiculo(p_id_veiculo integer, p_data_inicio date, p_data_fim date) TO professor_bd;
+GRANT ALL ON FUNCTION fn_custo_total_veiculo(p_id_veiculo integer, p_data_inicio date, p_data_fim date) TO professor_bd;
 
 
 --
@@ -10466,7 +10466,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_custo_total_veiculo(p_id_veiculo in
 -- Name: FUNCTION fn_gasto_combustivel(p_id_veiculo integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_gasto_combustivel(p_id_veiculo integer) TO professor_bd;
+GRANT ALL ON FUNCTION fn_gasto_combustivel(p_id_veiculo integer) TO professor_bd;
 
 
 --
@@ -10475,7 +10475,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_gasto_combustivel(p_id_veiculo inte
 -- Name: FUNCTION fn_km_percorridos(p_id_veiculo integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_km_percorridos(p_id_veiculo integer) TO professor_bd;
+GRANT ALL ON FUNCTION fn_km_percorridos(p_id_veiculo integer) TO professor_bd;
 
 
 --
@@ -10484,7 +10484,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_km_percorridos(p_id_veiculo integer
 -- Name: FUNCTION fn_motorista_apto(p_id_motorista integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_motorista_apto(p_id_motorista integer) TO professor_bd;
+GRANT ALL ON FUNCTION fn_motorista_apto(p_id_motorista integer) TO professor_bd;
 
 
 --
@@ -10493,7 +10493,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_motorista_apto(p_id_motorista integ
 -- Name: FUNCTION fn_total_abastecimentos(p_id_veiculo integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_total_abastecimentos(p_id_veiculo integer) TO professor_bd;
+GRANT ALL ON FUNCTION fn_total_abastecimentos(p_id_veiculo integer) TO professor_bd;
 
 
 --
@@ -10502,7 +10502,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_total_abastecimentos(p_id_veiculo i
 -- Name: FUNCTION fn_total_despesas(p_id_veiculo integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_total_despesas(p_id_veiculo integer) TO professor_bd;
+GRANT ALL ON FUNCTION fn_total_despesas(p_id_veiculo integer) TO professor_bd;
 
 
 --
@@ -10511,7 +10511,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_total_despesas(p_id_veiculo integer
 -- Name: FUNCTION fn_total_manutencao(p_id_veiculo integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_total_manutencao(p_id_veiculo integer) TO professor_bd;
+GRANT ALL ON FUNCTION fn_total_manutencao(p_id_veiculo integer) TO professor_bd;
 
 
 --
@@ -10520,7 +10520,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_total_manutencao(p_id_veiculo integ
 -- Name: FUNCTION fn_total_viagens_motorista(p_id_motorista integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_total_viagens_motorista(p_id_motorista integer) TO professor_bd;
+GRANT ALL ON FUNCTION fn_total_viagens_motorista(p_id_motorista integer) TO professor_bd;
 
 
 --
@@ -10529,7 +10529,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.fn_total_viagens_motorista(p_id_motori
 -- Name: PROCEDURE sp_concluir_manutencao(IN p_id_veiculo integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON PROCEDURE gabriel_trabalho_bd.sp_concluir_manutencao(IN p_id_veiculo integer) TO professor_bd;
+GRANT ALL ON PROCEDURE sp_concluir_manutencao(IN p_id_veiculo integer) TO professor_bd;
 
 
 --
@@ -10538,7 +10538,7 @@ GRANT ALL ON PROCEDURE gabriel_trabalho_bd.sp_concluir_manutencao(IN p_id_veicul
 -- Name: PROCEDURE sp_finalizar_viagem(IN p_id_viagem integer, IN p_km_final integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON PROCEDURE gabriel_trabalho_bd.sp_finalizar_viagem(IN p_id_viagem integer, IN p_km_final integer) TO professor_bd;
+GRANT ALL ON PROCEDURE sp_finalizar_viagem(IN p_id_viagem integer, IN p_km_final integer) TO professor_bd;
 
 
 --
@@ -10547,7 +10547,7 @@ GRANT ALL ON PROCEDURE gabriel_trabalho_bd.sp_finalizar_viagem(IN p_id_viagem in
 -- Name: PROCEDURE sp_iniciar_viagem(IN p_id_veiculo integer, IN p_id_motorista integer, IN p_destino character varying, IN p_finalidade character varying, IN p_km_inicial integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON PROCEDURE gabriel_trabalho_bd.sp_iniciar_viagem(IN p_id_veiculo integer, IN p_id_motorista integer, IN p_destino character varying, IN p_finalidade character varying, IN p_km_inicial integer) TO professor_bd;
+GRANT ALL ON PROCEDURE sp_iniciar_viagem(IN p_id_veiculo integer, IN p_id_motorista integer, IN p_destino character varying, IN p_finalidade character varying, IN p_km_inicial integer) TO professor_bd;
 
 
 --
@@ -10556,7 +10556,7 @@ GRANT ALL ON PROCEDURE gabriel_trabalho_bd.sp_iniciar_viagem(IN p_id_veiculo int
 -- Name: PROCEDURE sp_registrar_manutencao(IN p_id_veiculo integer, IN p_tipo character varying, IN p_descricao character varying, IN p_oficina character varying, IN p_valor numeric, IN p_km integer); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON PROCEDURE gabriel_trabalho_bd.sp_registrar_manutencao(IN p_id_veiculo integer, IN p_tipo character varying, IN p_descricao character varying, IN p_oficina character varying, IN p_valor numeric, IN p_km integer) TO professor_bd;
+GRANT ALL ON PROCEDURE sp_registrar_manutencao(IN p_id_veiculo integer, IN p_tipo character varying, IN p_descricao character varying, IN p_oficina character varying, IN p_valor numeric, IN p_km integer) TO professor_bd;
 
 
 --
@@ -10565,7 +10565,7 @@ GRANT ALL ON PROCEDURE gabriel_trabalho_bd.sp_registrar_manutencao(IN p_id_veicu
 -- Name: FUNCTION tg_fn_abastecimento_valida(); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.tg_fn_abastecimento_valida() TO professor_bd;
+GRANT ALL ON FUNCTION tg_fn_abastecimento_valida() TO professor_bd;
 
 
 --
@@ -10574,7 +10574,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.tg_fn_abastecimento_valida() TO profes
 -- Name: FUNCTION tg_fn_atualiza_km_veiculo(); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.tg_fn_atualiza_km_veiculo() TO professor_bd;
+GRANT ALL ON FUNCTION tg_fn_atualiza_km_veiculo() TO professor_bd;
 
 
 --
@@ -10583,7 +10583,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.tg_fn_atualiza_km_veiculo() TO profess
 -- Name: FUNCTION tg_fn_veiculo_historico_status(); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.tg_fn_veiculo_historico_status() TO professor_bd;
+GRANT ALL ON FUNCTION tg_fn_veiculo_historico_status() TO professor_bd;
 
 
 --
@@ -10592,7 +10592,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.tg_fn_veiculo_historico_status() TO pr
 -- Name: FUNCTION tg_fn_viagem_valida(); Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT ALL ON FUNCTION gabriel_trabalho_bd.tg_fn_viagem_valida() TO professor_bd;
+GRANT ALL ON FUNCTION tg_fn_viagem_valida() TO professor_bd;
 
 
 --
@@ -10601,7 +10601,7 @@ GRANT ALL ON FUNCTION gabriel_trabalho_bd.tg_fn_viagem_valida() TO professor_bd;
 -- Name: TABLE abastecimentos; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.abastecimentos TO professor_bd;
+GRANT SELECT ON TABLE abastecimentos TO professor_bd;
 
 
 --
@@ -10610,7 +10610,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.abastecimentos TO professor_bd;
 -- Name: SEQUENCE abastecimentos_id_abastecimento_seq; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.abastecimentos_id_abastecimento_seq TO professor_bd;
+GRANT SELECT,USAGE ON SEQUENCE abastecimentos_id_abastecimento_seq TO professor_bd;
 
 
 --
@@ -10619,7 +10619,7 @@ GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.abastecimentos_id_abastecimen
 -- Name: TABLE despesas; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.despesas TO professor_bd;
+GRANT SELECT ON TABLE despesas TO professor_bd;
 
 
 --
@@ -10628,7 +10628,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.despesas TO professor_bd;
 -- Name: SEQUENCE despesas_id_despesa_seq; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.despesas_id_despesa_seq TO professor_bd;
+GRANT SELECT,USAGE ON SEQUENCE despesas_id_despesa_seq TO professor_bd;
 
 
 --
@@ -10637,7 +10637,7 @@ GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.despesas_id_despesa_seq TO pr
 -- Name: TABLE historico_status_veiculo; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.historico_status_veiculo TO professor_bd;
+GRANT SELECT ON TABLE historico_status_veiculo TO professor_bd;
 
 
 --
@@ -10646,7 +10646,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.historico_status_veiculo TO professor_
 -- Name: SEQUENCE historico_status_veiculo_id_historico_seq; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON SEQUENCE gabriel_trabalho_bd.historico_status_veiculo_id_historico_seq TO professor_bd;
+GRANT SELECT ON SEQUENCE historico_status_veiculo_id_historico_seq TO professor_bd;
 
 
 --
@@ -10655,7 +10655,7 @@ GRANT SELECT ON SEQUENCE gabriel_trabalho_bd.historico_status_veiculo_id_histori
 -- Name: TABLE hodometros; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.hodometros TO professor_bd;
+GRANT SELECT ON TABLE hodometros TO professor_bd;
 
 
 --
@@ -10664,7 +10664,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.hodometros TO professor_bd;
 -- Name: SEQUENCE hodometros_id_hodometro_seq; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.hodometros_id_hodometro_seq TO professor_bd;
+GRANT SELECT,USAGE ON SEQUENCE hodometros_id_hodometro_seq TO professor_bd;
 
 
 --
@@ -10673,7 +10673,7 @@ GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.hodometros_id_hodometro_seq T
 -- Name: TABLE manutencoes; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.manutencoes TO professor_bd;
+GRANT SELECT ON TABLE manutencoes TO professor_bd;
 
 
 --
@@ -10682,7 +10682,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.manutencoes TO professor_bd;
 -- Name: SEQUENCE manutencoes_id_manutencao_seq; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.manutencoes_id_manutencao_seq TO professor_bd;
+GRANT SELECT,USAGE ON SEQUENCE manutencoes_id_manutencao_seq TO professor_bd;
 
 
 --
@@ -10691,7 +10691,7 @@ GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.manutencoes_id_manutencao_seq
 -- Name: TABLE modalidade; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.modalidade TO professor_bd;
+GRANT SELECT ON TABLE modalidade TO professor_bd;
 
 
 --
@@ -10700,7 +10700,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.modalidade TO professor_bd;
 -- Name: TABLE motoristas; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.motoristas TO professor_bd;
+GRANT SELECT ON TABLE motoristas TO professor_bd;
 
 
 --
@@ -10709,7 +10709,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.motoristas TO professor_bd;
 -- Name: SEQUENCE motoristas_id_motorista_seq; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.motoristas_id_motorista_seq TO professor_bd;
+GRANT SELECT,USAGE ON SEQUENCE motoristas_id_motorista_seq TO professor_bd;
 
 
 --
@@ -10718,7 +10718,7 @@ GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.motoristas_id_motorista_seq T
 -- Name: TABLE veiculos; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.veiculos TO professor_bd;
+GRANT SELECT ON TABLE veiculos TO professor_bd;
 
 
 --
@@ -10727,7 +10727,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.veiculos TO professor_bd;
 -- Name: TABLE mv_consumo_veiculos; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_consumo_veiculos TO professor_bd;
+GRANT SELECT ON TABLE mv_consumo_veiculos TO professor_bd;
 
 
 --
@@ -10736,7 +10736,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_consumo_veiculos TO professor_bd;
 -- Name: TABLE viagens; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.viagens TO professor_bd;
+GRANT SELECT ON TABLE viagens TO professor_bd;
 
 
 --
@@ -10745,7 +10745,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.viagens TO professor_bd;
 -- Name: TABLE mv_dashboard_frota; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_dashboard_frota TO professor_bd;
+GRANT SELECT ON TABLE mv_dashboard_frota TO professor_bd;
 
 
 --
@@ -10754,7 +10754,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_dashboard_frota TO professor_bd;
 -- Name: TABLE mv_desempenho_motoristas; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_desempenho_motoristas TO professor_bd;
+GRANT SELECT ON TABLE mv_desempenho_motoristas TO professor_bd;
 
 
 --
@@ -10763,7 +10763,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_desempenho_motoristas TO professor_
 -- Name: TABLE mv_gastos_mensais; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_gastos_mensais TO professor_bd;
+GRANT SELECT ON TABLE mv_gastos_mensais TO professor_bd;
 
 
 --
@@ -10772,7 +10772,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_gastos_mensais TO professor_bd;
 -- Name: TABLE mv_gastos_veiculos; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_gastos_veiculos TO professor_bd;
+GRANT SELECT ON TABLE mv_gastos_veiculos TO professor_bd;
 
 
 --
@@ -10781,7 +10781,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_gastos_veiculos TO professor_bd;
 -- Name: TABLE mv_manutencoes_por_tipo; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_manutencoes_por_tipo TO professor_bd;
+GRANT SELECT ON TABLE mv_manutencoes_por_tipo TO professor_bd;
 
 
 --
@@ -10790,7 +10790,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.mv_manutencoes_por_tipo TO professor_b
 -- Name: SEQUENCE veiculos_id_veiculo_seq; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.veiculos_id_veiculo_seq TO professor_bd;
+GRANT SELECT,USAGE ON SEQUENCE veiculos_id_veiculo_seq TO professor_bd;
 
 
 --
@@ -10799,7 +10799,7 @@ GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.veiculos_id_veiculo_seq TO pr
 -- Name: SEQUENCE viagens_id_viagem_seq; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.viagens_id_viagem_seq TO professor_bd;
+GRANT SELECT,USAGE ON SEQUENCE viagens_id_viagem_seq TO professor_bd;
 
 
 --
@@ -10808,7 +10808,7 @@ GRANT SELECT,USAGE ON SEQUENCE gabriel_trabalho_bd.viagens_id_viagem_seq TO prof
 -- Name: TABLE vw_gastos_veiculos; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.vw_gastos_veiculos TO professor_bd;
+GRANT SELECT ON TABLE vw_gastos_veiculos TO professor_bd;
 
 
 --
@@ -10817,7 +10817,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.vw_gastos_veiculos TO professor_bd;
 -- Name: TABLE vw_historico_abastecimentos; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.vw_historico_abastecimentos TO professor_bd;
+GRANT SELECT ON TABLE vw_historico_abastecimentos TO professor_bd;
 
 
 --
@@ -10826,7 +10826,7 @@ GRANT SELECT ON TABLE gabriel_trabalho_bd.vw_historico_abastecimentos TO profess
 -- Name: TABLE vw_resumo_viagens; Type: ACL; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-GRANT SELECT ON TABLE gabriel_trabalho_bd.vw_resumo_viagens TO professor_bd;
+GRANT SELECT ON TABLE vw_resumo_viagens TO professor_bd;
 
 
 --
@@ -10867,7 +10867,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE cloud_admin IN SCHEMA public GRANT ALL ON TABL
 -- Name: mv_consumo_veiculos; Type: MATERIALIZED VIEW DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_consumo_veiculos;
+REFRESH MATERIALIZED VIEW mv_consumo_veiculos;
 
 
 --
@@ -10876,7 +10876,7 @@ REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_consumo_veiculos;
 -- Name: mv_dashboard_frota; Type: MATERIALIZED VIEW DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_dashboard_frota;
+REFRESH MATERIALIZED VIEW mv_dashboard_frota;
 
 
 --
@@ -10885,7 +10885,7 @@ REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_dashboard_frota;
 -- Name: mv_desempenho_motoristas; Type: MATERIALIZED VIEW DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_desempenho_motoristas;
+REFRESH MATERIALIZED VIEW mv_desempenho_motoristas;
 
 
 --
@@ -10894,7 +10894,7 @@ REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_desempenho_motoristas;
 -- Name: mv_gastos_mensais; Type: MATERIALIZED VIEW DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_mensais;
+REFRESH MATERIALIZED VIEW mv_gastos_mensais;
 
 
 --
@@ -10903,7 +10903,7 @@ REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_mensais;
 -- Name: mv_gastos_veiculos; Type: MATERIALIZED VIEW DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_veiculos;
+REFRESH MATERIALIZED VIEW mv_gastos_veiculos;
 
 
 --
@@ -10912,7 +10912,7 @@ REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_gastos_veiculos;
 -- Name: mv_manutencoes_por_tipo; Type: MATERIALIZED VIEW DATA; Schema: gabriel_trabalho_bd; Owner: neondb_owner
 --
 
-REFRESH MATERIALIZED VIEW gabriel_trabalho_bd.mv_manutencoes_por_tipo;
+REFRESH MATERIALIZED VIEW mv_manutencoes_por_tipo;
 
 
 -- Completed on 2026-11-03 10:19:49

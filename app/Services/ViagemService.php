@@ -3,14 +3,16 @@
 namespace App\Services;
 
 use App\Models\Viagem;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class ViagemService
 {
-    public function listar(): Collection
+    public function listar(): LengthAwarePaginator
     {
-        return Viagem::with(['veiculo', 'motorista'])->get();
+        return Viagem::with(['veiculo', 'motorista'])
+            ->orderByDesc('data_saida')
+            ->paginate(10);
     }
 
     public function buscarPorId(int $id): ?Viagem
@@ -21,7 +23,7 @@ class ViagemService
     public function iniciar(array $dados): void
     {
         DB::statement(
-            'CALL gabriel_trabalho_bd.sp_iniciar_viagem(?, ?, ?, ?, ?)',
+            'CALL sp_iniciar_viagem(?, ?, ?, ?, ?)',
             [
                 $dados['id_veiculo'],
                 $dados['id_motorista'],
@@ -35,7 +37,7 @@ class ViagemService
     public function finalizar(int $idViagem, int $kmFinal): void
     {
         DB::statement(
-            'CALL gabriel_trabalho_bd.sp_finalizar_viagem(?, ?)',
+            'CALL sp_finalizar_viagem(?, ?)',
             [
                 $idViagem,
                 $kmFinal,

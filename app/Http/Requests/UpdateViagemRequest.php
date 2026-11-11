@@ -17,12 +17,12 @@ class UpdateViagemRequest extends FormRequest
             'id_veiculo' => [
                 'required',
                 'integer',
-                'exists:gabriel_trabalho_bd.veiculos,id_veiculo',
+                'exists:veiculos,id_veiculo',
             ],
             'id_motorista' => [
                 'required',
                 'integer',
-                'exists:gabriel_trabalho_bd.motoristas,id_motorista',
+                'exists:motoristas,id_motorista',
             ],
             'data_saida' => ['required', 'date'],
             'data_retorno' => ['nullable', 'date', 'after_or_equal:data_saida'],
