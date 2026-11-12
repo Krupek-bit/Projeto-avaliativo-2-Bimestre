@@ -1,16 +1,16 @@
 <?php
 
 namespace App\Services;
-
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Models\Motorista;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class MotoristaService
 {
-    public function listar(): Collection
+    public function listarPaginado(int $porPagina = 15): LengthAwarePaginator
     {
-        return Motorista::all();
+        return Motorista::paginate($porPagina);
     }
 
     public function buscarPorId(int $id): ?Motorista

@@ -19,7 +19,7 @@ class VeiculoController extends Controller
 
     public function index(): View
     {
-        $veiculos = $this->veiculoService->listar();
+        $veiculos = $this->veiculoService->listarPaginado();
 
         return view('veiculos.index', compact('veiculos'));
     }

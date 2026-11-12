@@ -3,17 +3,17 @@
 namespace App\Services;
 
 use App\Models\Manutencao;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class ManutencaoService
 {
-    public function listar(): Collection
+    public function listar(): LengthAwarePaginator
     {
         return Manutencao::with('veiculo')
             ->orderByDesc('data_manutencao')
             ->orderByDesc('id_manutencao')
-            ->get();
+            ->paginate(10);
     }
 
     public function buscarPorId(int $id): ?Manutencao

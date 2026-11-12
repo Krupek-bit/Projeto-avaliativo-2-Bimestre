@@ -6,6 +6,7 @@ use App\Models\Hodometro;
 use App\Models\Veiculo;
 use App\Services\HodometroService;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
@@ -72,8 +73,9 @@ class HodometroServiceTest extends TestCase
             'observacao' => 'Revisão mensal',
         ]);
 
-        $resultado = (new HodometroService())->listar();
+        $resultado = (new HodometroService)->listar();
 
+        $this->assertInstanceOf(LengthAwarePaginator::class, $resultado);
         $this->assertCount(1, $resultado);
         $this->assertTrue($resultado->first()->relationLoaded('veiculo'));
         $this->assertEquals(
@@ -93,7 +95,7 @@ class HodometroServiceTest extends TestCase
             'observacao' => 'Leitura inicial',
         ]);
 
-        $resultado = (new HodometroService())
+        $resultado = (new HodometroService)
             ->buscarPorId($hodometro->id_hodometro);
 
         $this->assertNotNull($resultado);
@@ -106,7 +108,7 @@ class HodometroServiceTest extends TestCase
 
     public function test_retorna_null_quando_hodometro_nao_existe(): void
     {
-        $resultado = (new HodometroService())->buscarPorId(999);
+        $resultado = (new HodometroService)->buscarPorId(999);
 
         $this->assertNull($resultado);
     }
@@ -122,7 +124,7 @@ class HodometroServiceTest extends TestCase
             'observacao' => 'Leitura de teste',
         ];
 
-        $resultado = (new HodometroService())->registrar($dados);
+        $resultado = (new HodometroService)->registrar($dados);
 
         $this->assertInstanceOf(Hodometro::class, $resultado);
         $this->assertEquals($veiculo->id_veiculo, $resultado->id_veiculo);
@@ -140,7 +142,7 @@ class HodometroServiceTest extends TestCase
     {
         $veiculo = $this->criarVeiculo();
 
-        $resultado = (new HodometroService())->registrar([
+        $resultado = (new HodometroService)->registrar([
             'id_veiculo' => $veiculo->id_veiculo,
             'data_registro' => '2026-11-03',
             'quilometragem' => 16000,

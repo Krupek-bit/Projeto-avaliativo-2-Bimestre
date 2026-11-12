@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use App\Models\Manutencao;
 use App\Services\ManutencaoService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
@@ -74,11 +74,11 @@ class ManutencaoServiceTest extends TestCase
             ],
         ]);
 
-        $service = new ManutencaoService();
+        $service = new ManutencaoService;
 
         $resultado = $service->listar();
 
-        $this->assertInstanceOf(Collection::class, $resultado);
+        $this->assertInstanceOf(LengthAwarePaginator::class, $resultado);
         $this->assertCount(2, $resultado);
         $this->assertEquals(2, $resultado->first()->id_manutencao);
         $this->assertEquals(
@@ -105,7 +105,7 @@ class ManutencaoServiceTest extends TestCase
             'quilometragem' => 10000,
         ]);
 
-        $service = new ManutencaoService();
+        $service = new ManutencaoService;
 
         $resultado = $service->buscarPorId(1);
 
@@ -119,7 +119,7 @@ class ManutencaoServiceTest extends TestCase
 
     public function test_retorna_null_quando_manutencao_nao_existe(): void
     {
-        $service = new ManutencaoService();
+        $service = new ManutencaoService;
 
         $resultado = $service->buscarPorId(999);
 
@@ -138,7 +138,7 @@ class ManutencaoServiceTest extends TestCase
         ];
 
         $queries = DB::connection()->pretend(function () use ($dados) {
-            (new ManutencaoService())->registrar($dados);
+            (new ManutencaoService)->registrar($dados);
         });
 
         $this->assertCount(1, $queries);
@@ -152,7 +152,7 @@ class ManutencaoServiceTest extends TestCase
     public function test_conclui_manutencao_chamando_procedure(): void
     {
         $queries = DB::connection()->pretend(function () {
-            (new ManutencaoService())->concluir(1);
+            (new ManutencaoService)->concluir(1);
         });
 
         $this->assertCount(1, $queries);

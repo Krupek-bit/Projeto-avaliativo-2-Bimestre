@@ -12,13 +12,6 @@
     @error('id_veiculo') <div class="invalid-feedback">{{ $message }}</div> @enderror
   </div>
   <div class="col-12 col-sm-6 col-md-3">
-    <label class="form-label">Data</label>
-    <input type="date" name="data_manutencao"
-           value="{{ old('data_manutencao', isset($manutencao) ? \Carbon\Carbon::parse($manutencao->data_manutencao)->format('Y-m-d') : '') }}"
-           class="form-control @error('data_manutencao') is-invalid @enderror">
-    @error('data_manutencao') <div class="invalid-feedback">{{ $message }}</div> @enderror
-  </div>
-  <div class="col-12 col-sm-6 col-md-3">
     <label class="form-label">Tipo</label>
     <input type="text" name="tipo_manutencao" maxlength="50" value="{{ old('tipo_manutencao', $manutencao->tipo_manutencao ?? '') }}"
            class="form-control @error('tipo_manutencao') is-invalid @enderror" placeholder="Preventiva, corretiva...">

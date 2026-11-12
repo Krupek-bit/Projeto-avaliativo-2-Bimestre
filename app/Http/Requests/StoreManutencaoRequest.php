@@ -15,7 +15,6 @@ class StoreManutencaoRequest extends FormRequest
     {
         return [
             'id_veiculo' => 'required|integer|exists:veiculos,id_veiculo',
-            'data_manutencao' => 'required|date',
             'tipo_manutencao' => 'required|string|max:50',
             'descricao' => 'required|string|max:255',
             'oficina' => 'nullable|string|max:100',
@@ -29,7 +28,6 @@ class StoreManutencaoRequest extends FormRequest
         return [
             'id_veiculo.required' => 'Selecione um veículo.',
             'id_veiculo.exists' => 'O veículo selecionado não existe.',
-            'data_manutencao.required' => 'Informe a data da manutenção.',
             'tipo_manutencao.required' => 'Informe o tipo de manutenção.',
             'descricao.required' => 'Informe a descrição da manutenção.',
             'valor.required' => 'Informe o valor da manutenção.',

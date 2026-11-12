@@ -3,14 +3,26 @@
 namespace App\Services;
 
 use App\Models\Veiculo;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class VeiculoService
 {
+    /**
+     * Lista completa (Collection). Use em selects/formulários.
+     */
     public function listar(): Collection
     {
         return Veiculo::all();
+    }
+
+    /**
+     * Lista paginada. Use na tela de listagem (index) que chama ->links().
+     */
+    public function listarPaginado(int $porPagina = 15): LengthAwarePaginator
+    {
+        return Veiculo::paginate($porPagina);
     }
 
     public function buscarPorId(int $id): ?Veiculo

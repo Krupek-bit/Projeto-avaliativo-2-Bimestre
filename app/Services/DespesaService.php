@@ -3,16 +3,16 @@
 namespace App\Services;
 
 use App\Models\Despesa;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class DespesaService
 {
-    public function listar(): Collection
+    public function listar(): LengthAwarePaginator
     {
         return Despesa::with('veiculo')
             ->orderByDesc('data_despesa')
             ->orderByDesc('id_despesa')
-            ->get();
+            ->paginate(10);
     }
 
     public function buscarPorId(int $id): ?Despesa
@@ -29,7 +29,7 @@ class DespesaService
     {
         $despesa = Despesa::find($id);
 
-        if (!$despesa) {
+        if (! $despesa) {
             return null;
         }
 
@@ -42,7 +42,7 @@ class DespesaService
     {
         $despesa = Despesa::find($id);
 
-        if (!$despesa) {
+        if (! $despesa) {
             return false;
         }
 

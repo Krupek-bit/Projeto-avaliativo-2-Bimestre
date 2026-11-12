@@ -3,16 +3,16 @@
 namespace App\Services;
 
 use App\Models\Hodometro;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class HodometroService
 {
-    public function listar(): Collection
+    public function listar(): LengthAwarePaginator
     {
         return Hodometro::with('veiculo')
             ->orderByDesc('data_registro')
             ->orderByDesc('id_hodometro')
-            ->get();
+            ->paginate(10);
     }
 
     public function buscarPorId(int $id): ?Hodometro

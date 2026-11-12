@@ -22,11 +22,10 @@
         <td class="text-nowrap">R$ {{ number_format($m->valor, 2, ',', '.') }}</td>
         <td>{{ number_format($m->quilometragem, 0, ',', '.') }}</td>
         <td class="text-end text-nowrap">
-          <a href="{{ route('manutencoes.edit', $m) }}" class="btn btn-sm btn-outline-primary">Editar</a>
-          <form method="POST" action="{{ route('manutencoes.destroy', $m) }}" class="d-inline"
-                onsubmit="return confirm('Excluir esta manutenção?')">
-            @csrf @method('DELETE')
-            <button class="btn btn-sm btn-outline-danger">Excluir</button>
+          <form method="POST" action="{{ route('manutencoes.concluir', $m->id_manutencao) }}" class="d-inline"
+                onsubmit="return confirm('Concluir a manutenção e liberar o veículo?')">
+            @csrf
+            <button class="btn btn-sm btn-outline-success">Concluir</button>
           </form>
         </td>
       </tr>

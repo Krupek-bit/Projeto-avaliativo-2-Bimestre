@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use App\Models\Despesa;
 use App\Services\DespesaService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
@@ -85,11 +85,11 @@ class DespesaServiceTest extends TestCase
             ],
         ]);
 
-        $service = new DespesaService();
+        $service = new DespesaService;
 
         $resultado = $service->listar();
 
-        $this->assertInstanceOf(Collection::class, $resultado);
+        $this->assertInstanceOf(LengthAwarePaginator::class, $resultado);
         $this->assertCount(2, $resultado);
         $this->assertEquals(2, $resultado->first()->id_despesa);
         $this->assertEquals('ABC-1234', $resultado->first()->veiculo->placa);
@@ -100,7 +100,7 @@ class DespesaServiceTest extends TestCase
         $this->criarVeiculo();
         $this->criarDespesa();
 
-        $service = new DespesaService();
+        $service = new DespesaService;
 
         $resultado = $service->buscarPorId(1);
 
@@ -111,7 +111,7 @@ class DespesaServiceTest extends TestCase
 
     public function test_retorna_null_quando_despesa_nao_existe(): void
     {
-        $service = new DespesaService();
+        $service = new DespesaService;
 
         $resultado = $service->buscarPorId(999);
 
@@ -130,7 +130,7 @@ class DespesaServiceTest extends TestCase
             'valor' => 350.00,
         ];
 
-        $service = new DespesaService();
+        $service = new DespesaService;
 
         $resultado = $service->cadastrar($dados);
 
@@ -148,7 +148,7 @@ class DespesaServiceTest extends TestCase
         $this->criarVeiculo();
         $this->criarDespesa();
 
-        $service = new DespesaService();
+        $service = new DespesaService;
 
         $resultado = $service->atualizar(1, [
             'tipo_despesa' => 'Pedágio',
@@ -167,7 +167,7 @@ class DespesaServiceTest extends TestCase
 
     public function test_retorna_null_ao_atualizar_despesa_inexistente(): void
     {
-        $service = new DespesaService();
+        $service = new DespesaService;
 
         $resultado = $service->atualizar(999, [
             'tipo_despesa' => 'Pedágio',
@@ -181,7 +181,7 @@ class DespesaServiceTest extends TestCase
         $this->criarVeiculo();
         $this->criarDespesa();
 
-        $service = new DespesaService();
+        $service = new DespesaService;
 
         $resultado = $service->excluir(1);
 
@@ -193,7 +193,7 @@ class DespesaServiceTest extends TestCase
 
     public function test_retorna_false_ao_excluir_despesa_inexistente(): void
     {
-        $service = new DespesaService();
+        $service = new DespesaService;
 
         $resultado = $service->excluir(999);
 

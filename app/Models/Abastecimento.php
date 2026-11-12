@@ -19,6 +19,7 @@ class Abastecimento extends Model
         'tipo_combustivel',
         'litros',
         'valor_litro',
+        'valor_total',
         'quilometragem',
     ];
 

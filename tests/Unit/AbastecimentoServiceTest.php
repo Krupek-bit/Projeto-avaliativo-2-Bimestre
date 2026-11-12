@@ -17,6 +17,12 @@ class AbastecimentoServiceTest extends TestCase
         parent::setUp();
 
         Schema::dropIfExists('abastecimentos');
+        Schema::dropIfExists('veiculos');
+
+        Schema::create('veiculos', function ($table) {
+            $table->increments('id_veiculo');
+            $table->string('placa')->nullable();
+        });
 
         Schema::create('abastecimentos', function ($table) {
             $table->increments('id_abastecimento');
@@ -39,6 +45,7 @@ class AbastecimentoServiceTest extends TestCase
     protected function tearDown(): void
     {
         Schema::dropIfExists('abastecimentos');
+        Schema::dropIfExists('veiculos');
 
         parent::tearDown();
     }
@@ -141,7 +148,6 @@ class AbastecimentoServiceTest extends TestCase
 
         $this->assertEquals('Etanol', $resultado->tipo_combustivel);
 
-        // O SQLite não executa a trigger do PostgreSQL.
-        $this->assertNull($resultado->valor_total);
+        $this->assertSame('135.00', $resultado->valor_total);
     }
 }

@@ -3,24 +3,22 @@
 namespace App\Services;
 
 use App\Models\Abastecimento;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class AbastecimentoService
 {
-
-    public function listar(): Collection
+    public function listar(): LengthAwarePaginator
     {
-        return Abastecimento::orderByDesc('data_abastecimento')
+        return Abastecimento::with('veiculo')
+            ->orderByDesc('data_abastecimento')
             ->orderByDesc('id_abastecimento')
-            ->get();
+            ->paginate(10);
     }
-
 
     public function buscarPorId(int $id): ?Abastecimento
     {
-        return Abastecimento::find($id);
+        return Abastecimento::with('veiculo')->find($id);
     }
-
 
     public function registrar(array $dados): Abastecimento
     {
@@ -30,9 +28,35 @@ class AbastecimentoService
             'tipo_combustivel' => $dados['tipo_combustivel'],
             'litros' => $dados['litros'],
             'valor_litro' => $dados['valor_litro'],
+            'valor_total' => round($dados['litros'] * $dados['valor_litro'], 2),
             'quilometragem' => $dados['quilometragem'],
         ]);
 
         return $abastecimento->refresh();
+    }
+
+    public function atualizar(int $id, array $dados): ?Abastecimento
+    {
+        $abastecimento = Abastecimento::find($id);
+
+        if (! $abastecimento) {
+            return null;
+        }
+
+        $dados['valor_total'] = round($dados['litros'] * $dados['valor_litro'], 2);
+        $abastecimento->update($dados);
+
+        return $abastecimento->refresh();
+    }
+
+    public function excluir(int $id): bool
+    {
+        $abastecimento = Abastecimento::find($id);
+
+        if (! $abastecimento) {
+            return false;
+        }
+
+        return (bool) $abastecimento->delete();
     }
 }

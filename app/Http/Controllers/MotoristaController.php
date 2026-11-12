@@ -19,7 +19,7 @@ class MotoristaController extends Controller
 
     public function index(): View
     {
-        $motoristas = $this->motoristaService->listar();
+        $motoristas = $this->motoristaService->listarPaginado();
 
         return view('motoristas.index', compact('motoristas'));
     }

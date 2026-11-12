@@ -5,12 +5,13 @@
   </button>
   <div class="collapse navbar-collapse" id="menuPrincipal">
     <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="#">Veículos</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Motoristas</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Viagens</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Abastecimentos</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Manutenções</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Despesas</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('veiculos.index') }}">Veículos</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('motoristas.index') }}">Motoristas</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('viagens.index') }}">Viagens</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('abastecimentos.index') }}">Abastecimentos</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('manutencoes.index') }}">Manutenções</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('despesas.index') }}">Despesas</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('hodometros.index') }}">Hodômetros</a></li>
       <li class="nav-item"><a class="nav-link" href="#">Histórico</a></li>
     </ul>
   </div>

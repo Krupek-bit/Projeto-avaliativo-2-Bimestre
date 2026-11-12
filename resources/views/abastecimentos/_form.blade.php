@@ -41,12 +41,6 @@
     @error('valor_litro') <div class="invalid-feedback">{{ $message }}</div> @enderror
   </div>
   <div class="col-6 col-md-3">
-    <label class="form-label">Valor total</label>
-    <input type="number" step="0.01" name="valor_total" value="{{ old('valor_total', $abastecimento->valor_total ?? '') }}"
-           class="form-control @error('valor_total') is-invalid @enderror">
-    @error('valor_total') <div class="invalid-feedback">{{ $message }}</div> @enderror
-  </div>
-  <div class="col-6 col-md-3">
     <label class="form-label">Quilometragem</label>
     <input type="number" name="quilometragem" value="{{ old('quilometragem', $abastecimento->quilometragem ?? '') }}"
            class="form-control @error('quilometragem') is-invalid @enderror">
