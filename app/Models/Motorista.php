@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Motorista extends Model
 {
-    protected $table = 'motoristas';
+    protected $table = 'gabriel_trabalho_bd.motoristas';
 
     protected $primaryKey = 'id_motorista';
 

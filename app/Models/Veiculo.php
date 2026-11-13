@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Veiculo extends Model
 {
-    protected $table = 'veiculos';
+    protected $table = 'gabriel_trabalho_bd.veiculos';
 
     protected $primaryKey = 'id_veiculo';
 
@@ -35,27 +35,47 @@ class Veiculo extends Model
 
     public function viagens(): HasMany
     {
-        return $this->hasMany(Viagem::class, 'id_veiculo', 'id_veiculo');
+        return $this->hasMany(
+            Viagem::class,
+            'id_veiculo',
+            'id_veiculo'
+        );
     }
 
     public function abastecimentos(): HasMany
     {
-        return $this->hasMany(Abastecimento::class, 'id_veiculo', 'id_veiculo');
+        return $this->hasMany(
+            Abastecimento::class,
+            'id_veiculo',
+            'id_veiculo'
+        );
     }
 
     public function manutencoes(): HasMany
     {
-        return $this->hasMany(Manutencao::class, 'id_veiculo', 'id_veiculo');
+        return $this->hasMany(
+            Manutencao::class,
+            'id_veiculo',
+            'id_veiculo'
+        );
     }
 
     public function despesas(): HasMany
     {
-        return $this->hasMany(Despesa::class, 'id_veiculo', 'id_veiculo');
+        return $this->hasMany(
+            Despesa::class,
+            'id_veiculo',
+            'id_veiculo'
+        );
     }
 
     public function hodometros(): HasMany
     {
-        return $this->hasMany(Hodometro::class, 'id_veiculo', 'id_veiculo');
+        return $this->hasMany(
+            Hodometro::class,
+            'id_veiculo',
+            'id_veiculo'
+        );
     }
 
     public function historicoStatus(): HasMany

@@ -23,7 +23,7 @@ class ViagemService
     public function iniciar(array $dados): void
     {
         DB::statement(
-            'CALL sp_iniciar_viagem(?, ?, ?, ?, ?)',
+            'CALL gabriel_trabalho_bd.sp_iniciar_viagem(?, ?, ?, ?, ?)',
             [
                 $dados['id_veiculo'],
                 $dados['id_motorista'],
@@ -37,7 +37,7 @@ class ViagemService
     public function finalizar(int $idViagem, int $kmFinal): void
     {
         DB::statement(
-            'CALL sp_finalizar_viagem(?, ?)',
+            'CALL gabriel_trabalho_bd.sp_finalizar_viagem(?, ?)',
             [
                 $idViagem,
                 $kmFinal,

@@ -21,6 +21,7 @@ class StoreVeiculoRequest extends FormRequest
             'tipo' => ['required', 'string', 'max:30'],
             'capacidade' => ['nullable', 'numeric', 'min:0'],
             'status' => ['required', 'in:ativo,em_viagem,em_manutencao,inativo'],
+            'quilometragem_atual' => ['required', 'integer', 'min:0'],
         ];
     }
 
@@ -39,6 +40,9 @@ class StoreVeiculoRequest extends FormRequest
             'capacidade.min' => 'A capacidade não pode ser negativa.',
             'status.required' => 'O status é obrigatório.',
             'status.in' => 'O status informado é inválido.',
+            'quilometragem_atual.required' => 'A quilometragem atual é obrigatória.',
+            'quilometragem_atual.integer' => 'A quilometragem deve ser um número inteiro.',
+            'quilometragem_atual.min' => 'A quilometragem não pode ser negativa.',
         ];
     }
 }
