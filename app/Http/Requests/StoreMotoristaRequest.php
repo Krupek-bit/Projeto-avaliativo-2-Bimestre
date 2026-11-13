@@ -20,6 +20,7 @@ class StoreMotoristaRequest extends FormRequest
             'telefone' => ['nullable', 'string', 'max:20'],
             'data_admissao' => ['required', 'date'],
             'status' => ['required', 'string', 'max:20'],
+            'validade_cnh' => ['required', 'date'],
         ];
     }
 
@@ -38,6 +39,8 @@ class StoreMotoristaRequest extends FormRequest
             'data_admissao.date' => 'Informe uma data de admissão válida.',
             'status.required' => 'O status do motorista é obrigatório.',
             'status.max' => 'O status não pode ultrapassar 20 caracteres.',
+            'validade_cnh.required' => 'A validade da CNH é obrigatória.',  
+            'validade_cnh.date' => 'Informe uma data válida para a validade da CNH.',
         ];
     }
 }
